@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Start page</title>
+    <link rel='stylesheet' type="text/css" href='../ElementsStyle.css'>
+    <link rel="shortcut icon" type='image/x-icon' href="../titlePic.ico" />
+</head>
+<body onload="updateClock(); setInterval('updateClock()', 1000 )">
+<div id="wrapper">
+    <div id="welcomeBlock">Welcome to our site!<!--style="background-color: azure; padding: 3%; vertical-align: top;"-->
+        <div id="infoBlock"> On this site you can book rooms.
+            You can pick room you want to order on your own
+            or send request for room to our manager. In last case
+            you will receive list of suitable rooms for you.
+        </div>
+    </div>
+    <div id="leftBlock">
+        <label>Don't have an account yet?</label>
+        <form>
+            <a href="registration" class="button-ref" name="buttonRefRegistration">Sign up</a>
+        </form>
+    </div>
+    <div id="rightBlock">
+        <form>
+            <a href="log-in" class="button-ref" name="buttonRefLogin">Log in</a>
+        </form>
+    </div>
+</div><!--style="background-color:deepskyblue;padding:200px;"> -->
+<div id="dateBlock"> <span id="clock">&nbsp;</span>
+    <script src="../Scripts.js">
+    </script>
+</div>
+<div id="footer"><!--align="right"; style="padding-bottom:1%" -->Created by Elena Maximenko</div>
+</body>
+</html>

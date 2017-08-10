@@ -1,0 +1,417 @@
+/*
+    this file should be in web-directory, not in WEB-INF one
+ */
+#wrapper {
+    background-color: deepskyblue;
+    padding: 290px;
+}
+
+#footer {
+    position: fixed;
+    width: 200px;
+    margin-left: 1090px;
+    margin-top: 20px;
+    font-style: normal;
+    font-size: small;
+}
+
+#dateBlock {
+    position: fixed;
+    margin-left: 50px;
+    margin-top: 20px;
+    width: 460px;
+    height: 10px;
+    font-style: normal;
+    font-size: large;
+}
+
+#clock {
+    color: darkslateblue;
+}
+
+#welcomeBlock {
+    background-color: deepskyblue;
+    color: oldlace;
+    padding: 4%;
+    width: 550px;
+    font: bold 26px Constantia, serif;
+    border-radius: 15px;
+    position: fixed;
+    top: 45px;
+    text-align: center;
+}
+
+#codeBlock {
+    background-color: deepskyblue;
+    color: rebeccapurple;
+    top: 250px;
+    left: 500px;
+    position: fixed;
+    width: 600px;
+    height: 50px;
+    font: bold 14px Constantia;
+}
+
+#infoBlock{
+    background-color: deepskyblue;
+    width: 500px;
+    padding: 4%;
+    color: oldlace;
+    display: inline-block;
+    text-align: left;
+}
+
+.info-block {
+    background-color: deepskyblue;
+    width: 500px;
+    padding: 4%;
+    color: oldlace;
+    display: inline-block;
+    text-align: left;
+}
+
+.entity-div {
+    background-color: deepskyblue;
+    display: inline-block;
+    left: 15px;
+    height: 200px;
+    width: 600px;
+    color: white;
+    font: bold 22px Constantia, serif;
+}
+
+.change-block {
+    background-color: deepskyblue;
+    position: fixed;
+    left: 450px;
+    top: 400px;
+    width: 550px;
+    height: 70px;
+    text-align: center;
+    color: lightcyan  /*maroon/*firebrick/*darkred*/;
+    font: bold 18px Constantia, serif;
+}
+.scroll-table {
+    height: 800px;
+    overflow:scroll;
+}
+
+.entity-info-div {
+    background-color: deepskyblue;
+    display: inline-block;
+    position: fixed;
+    left: 420px;
+    width: 500px;
+    height: 50px;
+    font: bold 22px Constantia, serif;
+}
+
+.glyphicon-form {
+    background-color: deepskyblue;
+    width: 75px;
+    height: 60px
+}
+
+.label-button-link {
+    font: 16px Kokila, serif;
+}
+
+.button-submit-with-icon {
+   background: transparent;
+    border: none;
+    outline: none;
+}
+
+#leftBlock {
+    float: left;
+    position: fixed;
+    left: 45px;
+    top: 280px;
+    width: 300px;
+    height: 200px;
+}
+
+#rightBlock {
+    background-color: deepskyblue;
+    float: right;
+    position: fixed;
+    right: 80px;
+    top: 310px;
+    width: 300px;
+    height: 200px;
+}
+
+a {
+    font: bold 28px Kokila, serif;
+    color: white;
+   /* text-decoration: none;*/
+}
+
+label {
+    float: left;
+    width: 10em;
+    margin-right: 13em;
+    font: bold 28px Kokila, serif;
+    color: white;
+    /*margin-top: 30px;
+   /* margin-bottom: 3px;*/
+}
+
+#buttonFormBlock {
+    display: inline-block;
+    position: fixed;
+    top: 410px;
+    left: 900px;
+    width: 90px;
+    height: 50px;
+    background-color: deepskyblue;
+}
+
+.placeholder {
+    color: silver;
+}
+
+input[type="submit"] {
+
+   /* margin-left: 55px;
+    margin-top: 30px;*/
+    margin: auto;
+    margin-top: 50px;
+    margin-right: 50px;
+    background-color: rebeccapurple; /*dodgerblue; /*cornflowerblue; /*navy *paleturquoise*/;
+    width: 120px;
+    height: 45px;
+    font: 20px MS Outlook, serif;
+    font-weight: bold;
+    color: oldlace;
+    border-radius: 10px;
+    border: 2px solid;
+}
+
+#errorBlock {
+    background-color: deepskyblue;
+    position: fixed;
+    left: 450px;
+    top: 325px;
+    width: 550px;
+    height: 262px;
+    text-align: left;
+    color: red  /*maroon/*firebrick/*darkred*/;
+    font: bold 16px Constantia, serif;
+}
+
+#inputBlock{
+    display: inline-block;
+    background-color: deepskyblue;
+    width: 400px;
+    left: 315px;
+    position: fixed;
+    top: 60px;
+}
+
+.input-block {
+    display: inline-block;
+    background-color: deepskyblue;
+    width: 400px;
+    left: 315px;
+    position: fixed;
+    top: 60px;
+}
+
+#passwordInfoBlock {
+    display: inline-block;
+    background-color: deepskyblue;
+    height: 345px;
+    width: 370px;
+    left: 40px;
+    position: fixed;
+    top: 100px;
+    color: rebeccapurple;
+    font: bold 16px Constantia, serif;
+}
+
+.password-info-label {
+    font: bold 18px Constantia, serif;
+    color: white;
+}
+
+#buttonLogInBlock {
+    background-color: deepskyblue;
+    position: fixed;
+    top: 200px;
+    margin-left: 250px;
+    display: inline-block;
+}
+
+form {
+    background-color: deepskyblue;
+    margin-left: 40px;
+    color: oldlace;
+    font: bold 22px Constantia, serif;
+}
+
+#resetPasswordBlock {
+    background-color: deepskyblue;
+    position: fixed;
+    width: 200px;
+    height: 50px;
+    top: 20px;
+    margin-left: 250px;
+}
+
+#buttonResetPasswordBlock {
+    background-color: deepskyblue;
+    position: fixed;
+    top: 220px;
+    margin-left: 450px;
+    display: inline-block;
+}
+
+.input-file {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.inputfile + label {
+    font-size: 1.25em;
+    font-weight: 700;
+    color: white;
+    background-color: black;
+    display: inline-block;
+}
+
+.inputfile:focus + label,
+.inputfile + label:hover {
+    background-color: red;
+}
+
+.inputfile + label {
+    cursor: pointer; /* "hand" cursor */
+}
+
+/*input[type="text"]:focus {
+    background-color: lightcyan;
+}
+
+input[type="password"]:focus {
+    background-color: lightcyan;
+}*/
+
+input[type="text"] {
+    color: darkslateblue;
+    width: 400px;
+    font: bold 22px Kokila, serif;
+}
+
+input[type="password"]{
+    color: darkslateblue;
+    font: bold 22px Kokila, serif;
+    width: 400px;
+}
+
+.text-block {
+    background-color: deepskyblue;
+    position: fixed;
+    margin-left: 350px;
+    top: 45px;
+}
+
+.button-ref {
+    margin-left: 70px;
+    top: 60px;
+    border-style: solid;
+    text-decoration: none;
+    background-color: darkslateblue; /*dodgerblue; /*cornflowerblue; /*navy /*paleturquoise*/;
+    width: 270px;
+    height: 100px;
+    font: 20px MS Outlook, serif;
+    font-weight: bold;
+    color: oldlace;
+    border-radius: 10px;
+    padding: 10px 20px;
+}
+
+input[type="button"]{
+    background-color: darkslateblue; /*dodgerblue; /*cornflowerblue; /*navy /*paleturquoise*/;
+    width: 120px;
+    height: 45px;
+    font: 20px MS Outlook, serif;
+    font-weight: bold;
+    color: oldlace;
+    border-radius: 10px;
+}
+
+#buttonBlock {
+    background-color: deepskyblue;
+    position: fixed;
+    margin-left: 270px;
+    display: inline-block;
+}
+
+.reset-password-label {
+    font: bold 34px Kokila, serif;
+    color: rebeccapurple;
+}
+
+.select-role {
+    font: bold 20px Kokila, serif;
+    color: rebeccapurple;
+}
+
+.no-copy {
+    -webkit-user-select: none;  /* Chrome all / Safari all */
+    -moz-user-select: none;     /* Firefox all */
+    -ms-user-select: none;      /* IE 10+ */
+    user-select: none;          /* Likely future */
+}
+
+#functionBlock {
+    left:10px;
+    top:10px;
+    height: 400px;
+    width:300px;
+    position: fixed;
+    background-color: deepskyblue;
+}
+
+#entityBlock {
+    overflow: auto;
+    right:10px;
+    top:20px;
+    height: 580px;
+    width:1000px;
+    position: fixed;
+    background-color: deepskyblue;
+}
+
+.entity-info-div{
+    width: 500px;
+    position: inherit;
+    color: white;
+    height: 183px;
+    font-size: 16px;
+    left: 400px;
+}
+
+.unselectable {
+    -webkit-user-select: none;  /* Chrome all / Safari all */
+    -moz-user-select: none;     /* Firefox all */
+    -ms-user-select: none;      /* IE 10+ */
+    user-select: none;    /* Likely future */
+}
+
+.button-link {
+    /*vertical-align:bottom;
+    overflow:visible;*/
+    font: 26px Kokila, serif;
+    display:inline;
+    margin:0;
+    padding:0;
+    border:0;
+    color:white;
+    cursor:pointer;
+}

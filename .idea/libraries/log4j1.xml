@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="log4j1">
+    <CLASSES>
+      <root url="jar://C:/Program Files/Java/apache-tomcat-8.5.14/lib/log4j.jar!/" />
+      <root url="jar://C:/Program Files/Java/apache-tomcat-8.5.14/lib/log4j-api-2.2.jar!/" />
+      <root url="jar://C:/Program Files/Java/apache-tomcat-8.5.14/lib/log4j-core-2.2.jar!/" />
+      <root url="file://$PROJECT_DIR$" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/src" />
+    </SOURCES>
+  </library>
+</component>
