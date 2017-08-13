@@ -2,6 +2,7 @@
 <%@ page import="com.hotel.util.DBProxy" %>
 <%@ page import="com.hotel.entity.Room" %>
 <%@ page import="java.util.List" %>
+<%@ page import="com.hotel.enums.State" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -52,7 +53,24 @@
 
     <div id="entityBlock">
         <table>
-            <%for(int i = 0; i < rooms.size(); i++){%>
+            <%for(int i = 0; i < rooms.size(); i++){
+            java.sql.Date today = dbProxy.getCurrentDate();
+                java.sql.Date moveIn = dbProxy.get("MoveInDate", rooms.get(i).getNumber());
+                if(moveIn != null){
+                    if (today.toString().equals(moveIn.toString())){
+                        //rooms.get(i).setState(State.valueOf("OCCUPIED"));
+                        Hotel.getInstance().setRoom(rooms.get(i).getNumber(), dbProxy.changeState("Occupied", rooms.get(i).getNumber()));
+                    }
+                }
+
+                java.sql.Date moveOut = dbProxy.get("MoveOutDate", rooms.get(i).getNumber());
+                if(moveOut != null){
+                    if (today.toString().equals(moveOut.toString())){
+                        //rooms.get(i).setState(State.valueOf("AVAILABLE"));
+                        Hotel.getInstance().setRoom(rooms.get(i).getNumber(), dbProxy.changeState("Available", rooms.get(i).getNumber()));
+                    }
+                }
+            %>
             <tr>
                 <td>
                     <div class="entity-info-div" style="padding:10px"><!--style="width: 500px; position: inherit; color: white; height: 183px; font-size: 16px; left: 400px;"> -->
@@ -67,7 +85,6 @@
                     <%String id = "glyphicon-reserve-room-"+i;%>
                     <form method="get" action="reserve" class="glyphicon-form">
                         <button type="submit" class="button-submit-with-icon" id="<%=id%>">
-                            <!--!!!!!!!!!!!!!!!!!!! hide if room's reserved  !!!!!!!!!!!!!!!!!!! -->
                             <span class="glyphicon glyphicon-ok" style="padding: 10px; font-size: 22px; float: left; color: limegreen; background-color: white; border-radius: 30px; width: 45px; height: 45px"></span>
                         </button>
                         <input type="hidden" value="<%=rooms.get(i).getNumber()%>" name="room">

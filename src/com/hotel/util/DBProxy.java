@@ -549,6 +549,29 @@ public class DBProxy {
         }
     }
 
+    public Date getCurrentDate() throws SQLException {
+        try (Connection connection = DriverManager.getConnection(DBConstants.URL, DBConstants.USER, DBConstants.PASSWORD)) {
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT current_date() AS Today");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            return resultSet.getDate("Today");
+        }
+    }
+
+    public Date get(String field, int number) throws SQLException {
+        String queryGetDateByRoomNumber = "SELECT "+field+" FROM Journal AS j LEFT JOIN Rooms AS  r ON (r.Id = j.RoomId)\n" +
+                "WHERE RoomNumber = ?";
+        try (Connection connection = DriverManager.getConnection(DBConstants.URL, DBConstants.USER, DBConstants.PASSWORD)) {
+            PreparedStatement preparedStatement = connection.prepareStatement(queryGetDateByRoomNumber);
+            preparedStatement.setInt(1, number);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if(!resultSet.next()){
+                return null;
+            }
+            return resultSet.getDate(field);
+        }
+    }
+
     public Room getRoomByNumber(int number) throws SQLException {
         String querySelectRoomByNumber = "SELECT * FROM Rooms WHERE RoomNumber = ?";
         try (Connection connection = DriverManager.getConnection(DBConstants.URL, DBConstants.USER, DBConstants.PASSWORD)) {
@@ -604,7 +627,6 @@ public class DBProxy {
         }
     }
 
-    // and use for occupied room
     public Room changeState(String state, int number) throws SQLException {
         try (Connection connection = DriverManager.getConnection(DBConstants.URL, DBConstants.USER, DBConstants.PASSWORD)) {
             PreparedStatement preparedStatement = connection.prepareStatement("UPDATE Rooms\n" +
@@ -615,7 +637,7 @@ public class DBProxy {
 
             Room room = getRoomByNumber(number);
             room.setState(State.valueOf(state.toUpperCase()));
-            return  room;
+            return room;
         }
     }
 
