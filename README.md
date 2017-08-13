@@ -1,7 +1,10 @@
 About this site
 ---------------
 
-  This is site of hotel. If you are a registered user, you can watch the rooms in hotel and pick one you want. Also if it is complicated decision for you, you will be able to send a request to manager of hotel with information about room you want. In this case manager will pick the most suitable room for you according to request you've sent.
+  This is site of hotel. If you are a registered user, you can watch the rooms in hotel and pick one you want.
+  There are two roles for users at this site: admin and client.
+  Admin can edit users, delete and edit rooms and also add and delete images of picked room.
+   User can watch photos of all the hotel rooms and reserve room they want.
   
 Installation
 ------------
@@ -27,7 +30,7 @@ Installation
   
   Some application info about users to work with:
   1) admin: login - amely.honey@gmail.com, password - L1234567. 
-  2) manager: login - dimalevak96@gmail.com, password - D1234567.
+  2) client: login - dimalevak96@gmail.com, password - D1234567.
   
 Libraries and modules
 ---------------------
@@ -35,7 +38,6 @@ Libraries and modules
     There is only one module in this application. It is named SummaryTask4. In current application Tomcat, MySQL, Log4j, commons-email, commons-fileupload, commons-io are used.
     Test for this web site via JUnit are planned.
     
-    Also as there is only one admin page yet, pages for Manager and Client'll be designed.
     Adding Maven support is considered.
     
  Authors and contacts

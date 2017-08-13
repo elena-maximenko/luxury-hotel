@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="ibatis-common-2">
-    <CLASSES>
-      <root url="jar://C:/Program Files/Java/apache-tomcat-8.5.14/lib/ibatis-common-2.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
