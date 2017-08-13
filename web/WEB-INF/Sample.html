@@ -1,24 +1,52 @@
 <html>
 <head>
     <title>Rooms</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <link rel='stylesheet' type="text/css" href='../ElementsStyle.css'>
+
+    <script type="text/javascript">
+        function setDefaultDate() {
+            var d = new Date();
+            var curr_date = d.getDate();
+            var curr_month = d.getMonth() + 1;
+            var curr_year = d.getFullYear();
+
+            if(curr_month < 10){
+                document.getElementById("dateFrom").min = curr_year+"-0"+curr_month+"-"+curr_date;
+                document.getElementById("dateFrom").max = curr_year+"-0"+(curr_month+1)+"-"+curr_date;
+
+                document.getElementById("dateTo").min = curr_year+"-0"+curr_month+"-"+(curr_date+1);
+                document.getElementById("dateTo").max = curr_year+"-0"+(curr_month+1)+"-"+curr_date;
+
+                document.getElementById("dateTo").defaultValue = curr_year+"-0"+curr_month+"-"+(curr_date+1);
+                document.getElementById("dateFrom").defaultValue = curr_year+"-0"+curr_month+"-"+curr_date;
+            }
+            else {
+                document.getElementById("dateFrom").min = curr_year+"-"+curr_month+"-"+curr_date;
+                document.getElementById("dateFrom").max = curr_year+"-"+(curr_month+1)+"-"+curr_date;
+
+                document.getElementById("dateTo").min = curr_year+"-"+curr_month+"-"+(curr_date+1);
+                document.getElementById("dateTo").max = curr_year+"-"+(curr_month+1)+"-"+curr_date;
+
+                document.getElementById("dateTo").defaultValue = curr_year+"-"+curr_month+"-"+(curr_date+1);
+                document.getElementById("dateFrom").defaultValue = curr_year+"-"+curr_month+"-"+curr_date;
+            }
+        }
+    </script>
 </head>
-<body onload="updateClock(); setInterval('updateClock()', 1000 )">
-<div id="wrapper" style="height: 200px">
-    <div class="InfoBlock" style ="top: 60px; position: fixed; width: 100px">
-        <label>Login</label>
-    </div>
-    <div class="input-block" style="left: 600px; position: fixed">
-        <form action="send-email" method="post">
-            <input type="text" name="email" id="idEmail" value="jkfkzdn" readonly>
-            <input type="submit" value="Send" style="top:95px; position: fixed">
-        </form>
-    </div>
+<body onload="updateClock(); setInterval('updateClock()', 1000 );setDefaultDate()">
+<div id="wrapper">
+    <form> <!-- write action and request method there! -->
+        <!--<button type="submit" style="background: transparent; border: none; width: 130px; position: fixed; top: 135px; left: 45px">
+            <!--<span class="glyphicon glyphicon-envelope" style="text-align: center; background-color: rebeccapurple; border: 2px solid oldlace; color: oldlace; font: 20px MS Outlook, serif; font-weight: bold; border-radius: 10px"> Send request</span> -->
+        <button type="submit" style="width:120px; height:50px; margin: auto; background-color: rebeccapurple; font: 20px MS Outlook, serif;
+                                      font-weight: bold; color: oldlace; border-radius: 10px;  border: 2px solid;">
+            <span>Reserved<br>earlier</span>
+            </button>
+    </form>
+    <form method="post" action="luxury-hotel">
+        <input type="submit" value="Log out">
+    </form>
 </div>
 <div id="dateBlock"> <span id="clock">&nbsp;</span>
     <script src="../Scripts.js">

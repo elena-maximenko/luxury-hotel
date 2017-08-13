@@ -8,7 +8,9 @@ import com.hotel.enums.Capacity;
 import com.hotel.enums.Category;
 import com.hotel.enums.Role;
 import com.hotel.enums.State;
+import com.hotel.servlets.AddRoomServlet;
 
+import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -79,6 +81,20 @@ public class DBProxy {
             "AdminPassword LONGBLOB NOT NULL\n" +
             ")";
     ///////////////////////////////////////emails ////////////////////////////////////////
+    //////////////////////////////////////journal////////////////////////////////////////
+    private final String CREATE_TABLE_JOURNAL_IF_NOT_EXISTS = "CREATE TABLE IF NOT EXISTS Journal\n" +
+            "(\n" +
+            "UId VARCHAR(100) NOT NULL,\n" +
+            "Id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,\n" +
+            "RoomId INT NOT NULL,\n" +
+            "INDEX RId (RoomId),\n" +
+            "FOREIGN KEY (RoomId) REFERENCES Rooms(Id) ON DELETE CASCADE ON UPDATE CASCADE,\n" +
+            "UserId INT NOT NULL,\n" +
+            "INDEX UsId (UserId), \n" +
+            "FOREIGN KEY (UserId) REFERENCES Users(Id) ON DELETE CASCADE ON UPDATE CASCADE,\n" +
+            "MoveInDate Date NOT NULL,\n" +
+            "MoveOutDate Date NOT NULL\n" +
+            ")";
     /////////////////////////////////////////tables/////////////////////////////////////////
 
     ////////////////////////////////////////triggers////////////////////////////////////
@@ -158,6 +174,7 @@ public class DBProxy {
                 CREATE_TABLE_ROOMS_IF_NOT_EXIST,
                 CREATE_TABLE_IMAGES_IF_NOT_EXIST,
                 CREATE_TABLE_EMAILS_IF_NOT_EXIST,
+                CREATE_TABLE_JOURNAL_IF_NOT_EXISTS,
 
                 "DROP TRIGGER IF EXISTS NumberInsertChecker",
                 "DROP TRIGGER IF EXISTS NumberUpdateChecker",
@@ -170,15 +187,72 @@ public class DBProxy {
             execute(query);
         }
 
-        if (isEmpty("Emails")) {
+        if (!containsLogin("Emails")) {
             execute("INSERT INTO Emails (Email, AdminPassword)\n" +
                     "VALUES\n" +
                     "('amely.honey@gmail.com', \"ZGN0dmJoeWZ6YmNuamhieg==\")");
         }
-        if (isEmpty("Users")) {
+        if (!containsLogin("Users")) {
             execute("INSERT INTO Users (Uid, Role, Login, FirstName, LastName, UserPassword) VALUES \n" +
                     "(\"" + generateUId() + "\",\"Admin\", \"amely.honey@gmail.com\", \"Elena\", \"Maximenko\",  \"TDEyMzQ1Njc=\"),\n" +
-                    "(\"" + generateUId() + "\",\"Manager\", \"dimalevak96@gmail.com\", \"Dmitry\", \"Kozinets\",  \"RDEyMzQ1Njc=\")");
+                    "(\"" + generateUId() + "\",\"Client\", \"dimalevak96@gmail.com\", \"Dmitry\", \"Kozinets\",  \"RDEyMzQ1Njc=\")");
+        }
+        if (isEmpty("Rooms")) {
+            execute("INSERT INTO Rooms (UId, RoomNumber, Category, Price, Capacity, State)\n" +
+                    "VALUES\n" +
+                    "(\"" + generateUId() + "\", 3, 'King Suite', 2000, 'Quadriple', 'Available'),\n" +
+                    "(\"" + generateUId() + "\", 22, 'De Luxe', 896, 'Double', 'Available'),\n" +
+                    "(\"" + generateUId() + "\", 32, 'Suite', 700, 'Double', 'Available'),\n" +
+                    "(\"" + generateUId() + "\", 47, 'De Luxe', 950, 'Quadriple', 'Available'),\n" +
+                    "(\"" + generateUId() + "\", 60, 'Suite', 670, 'Double', 'Available'),\n" +
+                    "(\"" + generateUId() + "\", 900, 'President Suite', 1400, 'Triple', 'Available')\n")
+            ;
+        }
+        if (isEmpty("Images")) {
+            imageDir = imageDir.replace("\\", "\\" + "\\");
+            execute("INSERT INTO Images (UId, Url, RoomId)\n" +
+                    "VALUES \n" +
+                    // room # 3
+                    "(\"" + generateUId() + "\", \"" + imageDir.concat("\\\\1730.png") + "\", 1),\n" +
+                    "(\"" + generateUId() + "\", \"" + imageDir.concat("\\\\101145754_p.png") + "\", 1),\n" +
+                    "(\"" + generateUId() + "\", \"" + imageDir.concat("\\\\decorar-salon-pequeno-moderno-chimenea-preciosa.png") + "\", 1),\n" +
+                    "(\"" + generateUId() + "\", \"" + imageDir.concat("\\\\StyleHive.com-Herbeau-Medicis-Weathered-Copper-Bathtub.png") + "\", 1),\n" +
+                    "(\"" + generateUId() + "\", \"" + imageDir.concat("\\\\The-Most-Beautiful-Living-Rooms-in-Paris-2.png") + "\", 1),\n" +
+                    "(\"" + generateUId() + "\", \"" + imageDir.concat("\\\\Tommy_Bahama_Royal_Kahala_Canopy_Bed.png") + "\", 1),\n" +
+
+                    // room # 22
+                    "(\"" + generateUId() + "\", \"" + imageDir.concat("\\\\1400960237316.png") + "\", 2),\n" +
+                    "(\"" + generateUId() + "\", \"" + imageDir.concat("\\\\1474119329995.png") + "\", 2),\n" +
+                    "(\"" + generateUId() + "\", \"" + imageDir.concat("\\\\living-room-with-natural-light.png") + "\", 2),\n" +
+                    "(\"" + generateUId() + "\", \"" + imageDir.concat("\\\\saZinebeli.png") + "\", 2),\n" +
+
+                    //room # 32
+                    "(\"" + generateUId() + "\", \"" + imageDir.concat("\\\\2cd535acd292ffe8537c03601f60cd960a1a8102.png") + "\", 3),\n" +
+                    "(\"" + generateUId() + "\", \"" + imageDir.concat("\\\\1400954399039.png") + "\", 3),\n" +
+                    "(\"" + generateUId() + "\", \"" + imageDir.concat("\\\\beautiful-rooms-for-the-book-loving-soul-2-4870-1445527471-9_dblbig.png") + "\", 3),\n" +
+                    "(\"" + generateUId() + "\", \"" + imageDir.concat("\\\\image.png") + "\", 3),\n" +
+                    "(\"" + generateUId() + "\", \"" + imageDir.concat("\\\\maxresdefault.png") + "\", 3),\n" +
+
+                    // room # 47
+                    "(\"" + generateUId() + "\", \"" + imageDir.concat("\\\\20-Beautiful-Kitchens-with-Dark-Kitchen-Cabinets-Design-1.png") + "\", 4),\n" +
+                    "(\"" + generateUId() + "\", \"" + imageDir.concat("\\\\beautiful-bedroom-art-design-ipc253.png") + "\", 4),\n" +
+                    "(\"" + generateUId() + "\", \"" + imageDir.concat("\\\\Beautiful-Jacuzzi-Bathtubs.png") + "\", 4),\n" +
+                    "(\"" + generateUId() + "\", \"" + imageDir.concat("\\\\dark-floors-fashionable-decorating-beautiful-living-rooms-pictures-fancy-beautiful-living-rooms.png") + "\", 4),\n" +
+
+                    // room # 60
+                    "(\"" + generateUId() + "\", \"" + imageDir.concat("\\\\6a0133ecb5beb5970b0168e73f0f9a970c-800wi.png") + "\", 5),\n" +
+                    "(\"" + generateUId() + "\", \"" + imageDir.concat("\\\\31456-Abstract-Book-Room.png") + "\", 5),\n" +
+                    "(\"" + generateUId() + "\", \"" + imageDir.concat("\\\\2677294c72eb0a4708e94c8d6bcf53e50c2c4816.png") + "\", 5),\n" +
+                    "(\"" + generateUId() + "\", \"" + imageDir.concat("\\\\Cdw7NqUWszDl.png") + "\", 5),\n" +
+                    "(\"" + generateUId() + "\", \"" + imageDir.concat("\\\\modern-family-room-portland-best-interior-design.preview.png") + "\", 5),\n" +
+
+                    // room # 900
+                    "(\"" + generateUId() + "\", \"" + imageDir.concat("\\\\673ef892761eb6f69bd7e9567eae28be-dining-room-tables-tablescapes.png") + "\", 6),\n" +
+                    "(\"" + generateUId() + "\", \"" + imageDir.concat("\\\\201732_idip13a_01_PH142160.png") + "\", 6),\n" +
+                    "(\"" + generateUId() + "\", \"" + imageDir.concat("\\\\INgHEJ-Z5KFx.png") + "\", 6),\n" +
+                    "(\"" + generateUId() + "\", \"" + imageDir.concat("\\\\traditional-bedroom.png") + "\", 6),\n" +
+                    "(\"" + generateUId() + "\", \"" + imageDir.concat("\\\\traditional-living-room.png") + "\", 6)\n"
+            );
         }
     }
 
@@ -199,13 +273,23 @@ public class DBProxy {
         }
     }
 
+    private String imageDir = new AddRoomServlet().getImagesDir();
+
     public boolean isEmpty(String table) throws SQLException {
+        try (Connection connection = DriverManager.getConnection(DBConstants.URL, DBConstants.USER, DBConstants.PASSWORD)) {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM " + table);
+            return !resultSet.next();
+        }
+    }
+
+    public boolean containsLogin(String table) throws SQLException {
         String field = (table.equals("Emails") ? "Email" : "Login");
         String querySelectFromEmailsByLogin = "SELECT * FROM " + table + " WHERE " + field + " LIKE \"amely.honey@gmail.com\"";
         try (Connection connection = DriverManager.getConnection(DBConstants.URL, DBConstants.USER, DBConstants.PASSWORD)) {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(querySelectFromEmailsByLogin);
-            return !resultSet.next();
+            return resultSet.next();
         }
     }
 
@@ -516,6 +600,39 @@ public class DBProxy {
             preparedStatement.setString(5, state);
             preparedStatement.setInt(6, oldNumber);
 
+            preparedStatement.executeUpdate();
+        }
+    }
+
+    // and use for occupied room
+    public Room changeState(String state, int number) throws SQLException {
+        try (Connection connection = DriverManager.getConnection(DBConstants.URL, DBConstants.USER, DBConstants.PASSWORD)) {
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE Rooms\n" +
+                    "SET State = ? WHERE RoomNumber = ?");
+            preparedStatement.setString(1, state);
+            preparedStatement.setInt(2, number);
+            preparedStatement.executeUpdate();
+
+            Room room = getRoomByNumber(number);
+            room.setState(State.valueOf(state.toUpperCase()));
+            return  room;
+        }
+    }
+
+    public void insertInJournal(String login, int roomNumber, Date moveIn, Date moveOut) throws SQLException {
+        int roomId = getId(roomNumber, getQuerySelectIdFromRooms());
+        int userId = getId(login, getQuerySelectIdFromUsers());
+
+        try (Connection connection = DriverManager.getConnection(DBConstants.URL, DBConstants.USER, DBConstants.PASSWORD)) {
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO Journal (UId, RoomId, UserId, MoveInDate, MoveOutDate)\n" +
+                    "VALUES \n" +
+                    "(?, ?, ?, ?, ?)");
+            preparedStatement.setString(1, generateUId());
+            //!!!!!!!!!!!!!!!!!!! change room state !!!!!!!!!!!!!!!!!!!
+            preparedStatement.setInt(2, roomId);
+            preparedStatement.setInt(3, userId);
+            preparedStatement.setDate(4, moveIn);
+            preparedStatement.setDate(5, moveOut);
             preparedStatement.executeUpdate();
         }
     }

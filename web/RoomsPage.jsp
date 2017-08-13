@@ -76,7 +76,6 @@
                         </button>
                         <input type="hidden" value="<%=rooms.get(i).getNumber()%>" name="room">
                     </form>
-                    <!-- add eye to watch the rooms -->
                 </td>
                 <td>
                     <form method="post" action="all-rooms?" class="glyphicon-form" style="width: 100px">

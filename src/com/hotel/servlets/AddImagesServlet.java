@@ -153,7 +153,7 @@ public class AddImagesServlet extends HttpServlet {
        response.sendRedirect("edit-images?room="+number);
     }
 
-    private void removeAttributes(HttpSession session, List<String> attributes, String unremovable){
+    public void removeAttributes(HttpSession session, List<String> attributes, String unremovable){
         for (String attribute: attributes) {
             if(!attribute.equals(unremovable)){
                 if(session.getAttribute(attribute) != null){

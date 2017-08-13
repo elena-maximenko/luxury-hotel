@@ -25,10 +25,24 @@ public class TokenChecker {
 
         if(httpSession.getAttribute("userToken") != null){
             String token = (String) httpSession.getAttribute("userToken");
+            String login = (String) httpSession.getAttribute("login");
 
             HttpSession session = request.getSession(true);
             session.setAttribute("userToken", token);
+            session.setAttribute("login", login);
 
+            switch(page){
+                case"RoomImagesPage.jsp":
+                {
+                    int numberRoomToWatch = Integer.parseInt(request.getParameter(NamesOfElements.ROOM_NUMBER));
+                    request.setAttribute("room", numberRoomToWatch);
+                    break;
+                }
+                case "ReservationPage.jsp":{
+                    int room = Integer.parseInt(request.getParameter(NamesOfElements.ROOM_NUMBER));
+                    session.setAttribute("room", room);
+                }
+            }
             RequestDispatcher requestDispatcher = request.getRequestDispatcher(page);
             requestDispatcher.forward(request, response);
         }

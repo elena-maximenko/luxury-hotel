@@ -307,6 +307,14 @@ input[type="text"] {
     font: bold 22px Kokila, serif;
 }
 
+input[type="date"]{
+    padding: 5px;
+    height: 25px;
+    color: darkslateblue;
+    width: 250px;
+    font: bold 22px Kokila, serif;
+}
+
 input[type="password"]{
     color: darkslateblue;
     font: bold 22px Kokila, serif;

@@ -14,7 +14,6 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>startServlet</servlet-name>
-        <!--change log out  -->
         <url-pattern>/luxury-hotel</url-pattern>
     </servlet-mapping>
 
@@ -146,6 +145,22 @@
         <servlet-name>addImagesServlet</servlet-name>
         <url-pattern>/add-images</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>roomImagesServlet</servlet-name>
+        <servlet-class>com.hotel.servlets.RoomImagesServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>roomImagesServlet</servlet-name>
+        <url-pattern>/room-images</url-pattern>
+    </servlet-mapping>
 
-
+    <servlet>
+        <servlet-name>reservationServlet</servlet-name>
+        <servlet-class>com.hotel.servlets.ReservationServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>reservationServlet</servlet-name>
+        <url-pattern>/reserve</url-pattern>
+    </servlet-mapping>
 </web-app>

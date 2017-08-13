@@ -21,37 +21,36 @@
 </style>
 <link rel='stylesheet' type="text/css" href='../ElementsStyle.css'>
 </head>
-<body  onload="updateClock(); setInterval('updateClock()', 1000 )">
 <%
     HttpSession ses = request.getSession(false);
     String token = (String)ses.getAttribute("userToken");
 
     HttpSession httpSession = request.getSession(true);
     httpSession.setAttribute("userToken", token);
-
 %>
+<%  Hotel hotel = Hotel.getInstance();
+    DBProxy dbProxy = new DBProxy();
+    hotel.setRooms(dbProxy.getRooms());
+    List<Room> rooms = hotel.getRooms();
+%>
+<body  onload="updateClock(); setInterval('updateClock()', 1000 )">
+
 <div id="wrapper">
     <div id="functionBlock">
         <form method="post" action="luxury-hotel">
             <input type="submit" value="Log out">
         </form>
         <form> <!-- write action and request method there! -->
-            <button type="submit" style="background: transparent; border: none; width: 130px; position: fixed; top: 135px; left: 45px">
-                <span class="glyphicon glyphicon-envelope" style="text-align: center; background-color: rebeccapurple; border: 2px solid oldlace; color: oldlace; font: 20px MS Outlook, serif; font-weight: bold; border-radius: 10px"> Send request</span>
+            <!--<button type="submit" style="background: transparent; border: none; width: 130px; position: fixed; top: 135px; left: 45px">
+                <!--<span class="glyphicon glyphicon-envelope" style="text-align: center; background-color: rebeccapurple; border: 2px solid oldlace; color: oldlace; font: 20px MS Outlook, serif; font-weight: bold; border-radius: 10px"> Send request</span> -->
+            <button type="submit" style="width:120px; height:50px; margin: auto; background-color: rebeccapurple; font: 20px MS Outlook, serif;
+                                      font-weight: bold; color: oldlace; border-radius: 10px;  border: 2px solid;">
+                <span>Reserved<br>earlier</span>
             </button>
         </form>
     </div>
 
     <div id="entityBlock">
-        <%  Hotel hotel = Hotel.getInstance();
-            DBProxy dbProxy = new DBProxy();
-            hotel.setRooms(dbProxy.getRooms());
-            List<Room> rooms = hotel.getRooms();
-            for (Room r: rooms) {
-                System.out.println(r.getNumber());
-            }
-            System.out.println(rooms);
-        %>
         <table>
             <%for(int i = 0; i < rooms.size(); i++){%>
             <tr>
@@ -65,19 +64,25 @@
                     </div>
                 </td>
                 <td>
-                    <form method="get" class="glyphicon-form">
-                        <button type="submit" class="button-submit-with-icon">
-                            <!-- do if room's reserved violet and on form pointer forbid! -->
+                    <%String id = "glyphicon-reserve-room-"+i;%>
+                    <form method="get" action="reserve" class="glyphicon-form">
+                        <button type="submit" class="button-submit-with-icon" id="<%=id%>">
+                            <!--!!!!!!!!!!!!!!!!!!! hide if room's reserved  !!!!!!!!!!!!!!!!!!! -->
                             <span class="glyphicon glyphicon-ok" style="padding: 10px; font-size: 22px; float: left; color: limegreen; background-color: white; border-radius: 30px; width: 45px; height: 45px"></span>
                         </button>
                         <input type="hidden" value="<%=rooms.get(i).getNumber()%>" name="room">
                     </form>
                 </td>
+                <%if(rooms.get(i).getState().getValue().equals("Reserved")||rooms.get(i).getState().getValue().equals("Occupied")){%>
+                <script>document.getElementById('<%=id%>').style.display='none';</script>
+                <%}%>
                 <td>
-                    <form method="post" action="all-rooms?" class="glyphicon-form" style="width: 100px">
-                        <button type="submit" class="button-submit-with-icon"> <input type="hidden" value="<%=rooms.get(i).getNumber()%>" name="room">
+                    <form method="get" action="room-images" class="glyphicon-form" style="width: 100px">
+                        <input type="hidden" value="<%=rooms.get(i).getNumber()%>" name="room">
+                        <button type="submit" class="button-submit-with-icon">
                             <span class="glyphicon glyphicon-eye-open" style= "padding: 10px; text-align: center; color: rebeccapurple; background-color: white; border: 2px solid white; border-radius: 30px; width: 45px; height: 45px"></span>
                         </button>
+
                     </form>
                 </td>
             </tr>

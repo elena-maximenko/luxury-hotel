@@ -83,6 +83,7 @@ public class LogInServlet extends HttpServlet {
                 String token = generator.next();
                 try{
                     HttpSession session = request.getSession(true);
+                    session.setAttribute("login", checkedLogin);
                     dbProxy.insertToken(token);
                     dbProxy.insertUserToken(checkedLogin, token);
 
@@ -98,7 +99,6 @@ public class LogInServlet extends HttpServlet {
                         session.setAttribute("userToken", token);
                         response.sendRedirect("account");
                     }
-                    //do for manager
                 }
                 catch (SQLException e){
                     e.fillInStackTrace();
