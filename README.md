@@ -23,6 +23,7 @@ Libraries and modules
 ---------------------
     
     There is only one module in this application. It is named SummaryTask4. In current application Tomcat, MySQL, Maven, commons-email, commons-fileupload, commons-io are used.
+    For storing application data MySQL open-source relational database management system is chosen.
     
     
  Authors and contacts
