@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit room</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <link rel='stylesheet' type="text/css" href='../ElementsStyle.css'>
+
+    <style type="text/css">
+        a:link {color: white;}      /* unvisited link */
+        a:visited {color: white;}   /* visited link */
+        a:hover {color: white;}     /* mouse over link */
+        a:active {color: white;}    /* selected link */
+        #wrapper {margin-left: 10px; margin-right: 10px; margin-top: 10px; height: 600px}
+        #dateBlock {font: 24px Kokila, serif;}
+        #footer {font: 16px Kokila, serif;}
+    </style>
+</head>
+<body onload="updateClock(); setInterval('updateClock()', 1000 ); setDefaultValues()">
+<div id="wrapper">
+    <div class="input-block">
+        <form>
+            <p>Number</p>
+            <p>Category</p>
+            <p>Price</p>
+            <p>Capacity</p>
+            <p>State</p>
+            <p>Images</p>
+        </form>
+    </div>
+    <div class="text-block">
+        <form method="post" action="edit-room" enctype='multipart/form-data'>
+            <p><input type="text" name="editedRoomNumber" id="editedRoomNumberId"></p>
+            <p><select name="editedSelectCategory" class="select-role">
+            </select></p>
+            <p><input type="text" name="editedRoomPrice" id="editedRoomPriceId"></p>
+            <p><select name="editedSelectCapacity" class="select-role">
+            </select></p>
+            <p><select name="editedRoomState" class="select-role">
+            </select></p>
+
+            <a href=<%="edit-images?room=" + room.getNumber()%> Change </a>
+
+            <!-- <p><input type="submit" value="OK"></p> -->
+            <button type="submit" class="input-submit-with-icon" style="width:230px; position: fixed; left: 550px; top: 250px">
+                OK <span class="glyphicon glyphicon-ok" style="font-style: italic"></span>
+            </button>
+        </form>
+    </div>
+    <div id="errorBlock" style="position: fixed; top:400px; height: 100px; width: 400px">
+    </div>
+    <form style="top: 500px; right: 75px; position: fixed; width: 250px" method="get" action="all-rooms?">
+        <button class="button-submit-with-icon" style="cursor:hand; width: 150px; height: 30px" type="submit">
+            <span style="font: bolder 20px Constantia, serif; color: white; text-decoration: underline">Back to rooms</span>
+        </button>
+    </form>
+</div>
+<div id="dateBlock"> <span id="clock">&nbsp;</span>
+    <script src="../Scripts.js">
+    </script>
+</div>
+<div id="footer">Created by Elena Maximenko</div>
+</body>
+</html>

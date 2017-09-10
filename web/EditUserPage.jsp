@@ -4,19 +4,27 @@
 <html>
 <head>
     <title>Edit user</title>
-    <link rel='stylesheet' type="text/css" href='../ElementsStyle.css'>
+    <link rel='stylesheet' type="text/css" href='ElementsStyle.css'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-
+<style type="text/css">
+    #wrapper {margin-left: 10px; margin-right: 10px; margin-top: 10px; height: 600px}
+    #dateBlock {font: 24px Kokila, serif;}
+    #footer {font: 16px Kokila, serif;}
+</style>
 <body onload="updateClock(); setInterval('updateClock()', 1000 )">
 <%User user = (User)request.getAttribute("userForEdition");
 request.setAttribute("editedUser", user);%>
 <div id="wrapper">
     <div class="input-block">
         <form>
-            <p> First name </p>
-            <p> Last name </p>
-            <p> Login </p>
-            <p> Role </p>
+            <p>First name</p>
+            <p>Last name</p>
+            <p>Login</p>
+            <p>Role</p>
         </form>
     </div>
     <div class="text-block">
@@ -37,7 +45,10 @@ request.setAttribute("editedUser", user);%>
                     }%>
             </select>
         </p>
-            <input type="submit" value="OK">
+            <!-- <input type="submit" value="OK"> -->
+            <button type="submit" class="input-submit-with-icon" style="width:230px; position: fixed; left: 550px; top: 230px">
+                OK <span class="glyphicon glyphicon-ok" style="font-style: italic"></span>
+            </button>
         </form>
         </div>
 

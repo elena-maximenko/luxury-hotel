@@ -1,6 +1,4 @@
-<%@ page import="com.hotel.util.DBProxy" %>
 <%@ page import="com.hotel.entity.Room" %>
-<%@ page import="com.hotel.entity.User" %>
 <%@ page import="com.hotel.enums.Category" %>
 <%@ page import="com.hotel.enums.Capacity" %>
 <%@ page import="com.hotel.enums.State" %>
@@ -20,9 +18,6 @@
         a:visited {color: white;}   /* visited link */
         a:hover {color: white;}     /* mouse over link */
         a:active {color: white;}    /* selected link */
-    </style>
-
-    <style type="text/css">
         #wrapper {margin-left: 10px; margin-right: 10px; margin-top: 10px; height: 600px}
         #dateBlock {font: 24px Kokila, serif;}
         #footer {font: 16px Kokila, serif;}
@@ -48,7 +43,6 @@
 </head>
 <body onload="updateClock(); setInterval('updateClock()', 1000 ); setDefaultValues()">
 <div id="wrapper">
-
     <div class="input-block">
         <form>
             <p>Number</p>
@@ -61,7 +55,7 @@
     </div>
     <div class="text-block">
         <form method="post" action="edit-room" enctype='multipart/form-data'>
-            <p><input type="text" name="editedRoomNumber" id="editedRoomNumberId"></p><!-- placeholder="<%/*=room.getNumber()*/%>" -->
+            <p><input type="text" name="editedRoomNumber" id="editedRoomNumberId"></p>
             <p><select name="editedSelectCategory" class="select-role">
                 <%for (Category category: Category.values()) {
                         if(category.equals(room.getCategory())){%>
@@ -72,8 +66,8 @@
                 <%}
                     }%>
             </select></p>
-            <p><input type="text" name="editedRoomPrice" id="editedRoomPriceId"></p> <!-- placeholder="<%/*=room.getPrice()*/%>"></p> -->
-            <p><select name="editedSelectCapacity" class="select-role">\
+            <p><input type="text" name="editedRoomPrice" id="editedRoomPriceId"></p>
+            <p><select name="editedSelectCapacity" class="select-role">
                 <%for (Capacity capacity: Capacity.values()) {
                         if(capacity.equals(room.getCapacity())) {%>
                 <option selected><%=capacity.getValue()%></option>
@@ -96,7 +90,6 @@
             </select></p>
 
             <a href=<%="edit-images?room=" + room.getNumber()%>> Change </a>
-           <!-- <div id="buttonFormBlock" style="width: 400px">
                 <%
                     HttpSession httpSession = request.getSession(false);
                     String token = (String) httpSession.getAttribute("token");
@@ -104,10 +97,11 @@
                     HttpSession ses = request.getSession(true);
                     ses.setAttribute("token", token);
                 %>
-               <!-- do "Back to rooms thing!"  <p><a href="rooms-in-hotel?">Back to rooms</a></p>
-                 submit is necessary 'cos of token! -->
-                <p><input type="submit" value="OK"></p>
-          <!--  </div> -->
+
+                <!-- <p><input type="submit" value="OK"></p> -->
+            <button type="submit" class="input-submit-with-icon" style="width:230px; position: fixed; left: 600px; top: 250px">
+                OK <span class="glyphicon glyphicon-ok" style="font-style: italic"></span>
+            </button>
         </form>
     </div>
     <div id="errorBlock" style="position: fixed; top:400px; height: 100px; width: 400px">

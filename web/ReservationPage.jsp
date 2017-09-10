@@ -11,29 +11,16 @@
             var curr_month = d.getMonth() + 1;
             var curr_year = d.getFullYear();
 
-            if(curr_month < 10){
-                document.getElementById("dateFrom").min = curr_year+"-0"+curr_month+"-"+curr_date;
-                document.getElementById("dateFrom").max = curr_year+"-0"+(curr_month+1)+"-"+curr_date;
+            document.getElementById("dateFrom").min = curr_year+((curr_month<10)?"-0"+curr_month:(curr_month))+"-"+((curr_date<10)?"0"+curr_date:curr_date);
+            document.getElementById("dateFrom").max = curr_year+((curr_month+1<10)?"-0"+(curr_month+1):(curr_month+1))+"-"+((curr_date<10)?"0"+curr_date:curr_date);
 
-                document.getElementById("dateTo").min = curr_year+"-0"+curr_month+"-"+(curr_date+1);
-                document.getElementById("dateTo").max = curr_year+"-0"+(curr_month+1)+"-"+curr_date;
+            document.getElementById("dateTo").min = curr_year+((curr_month<10)?"-0"+curr_month:(curr_month))+"-"+((curr_date+1<10)?"0"+(curr_date+1):(curr_date+1));
+            document.getElementById("dateTo").max = curr_year+((curr_month+1<10)?"-0"+(curr_month+1):(curr_month+1))+"-"+((curr_date+1<10)?"0"+(curr_date+1):(curr_date+1));
 
-                document.getElementById("dateTo").defaultValue = curr_year+"-0"+curr_month+"-"+(curr_date+1);
-                document.getElementById("dateFrom").defaultValue = curr_year+"-0"+curr_month+"-"+curr_date;
-            }
-            else {
-                document.getElementById("dateFrom").min = curr_year+"-"+curr_month+"-"+curr_date;
-                document.getElementById("dateFrom").max = curr_year+"-"+(curr_month+1)+"-"+curr_date;
-
-                document.getElementById("dateTo").min = curr_year+"-"+curr_month+"-"+(curr_date+1);
-                document.getElementById("dateTo").max = curr_year+"-"+(curr_month+1)+"-"+curr_date;
-
-                document.getElementById("dateTo").defaultValue = curr_year+"-"+curr_month+"-"+(curr_date+1);
-                document.getElementById("dateFrom").defaultValue = curr_year+"-"+curr_month+"-"+curr_date;
-            }
+            document.getElementById("dateTo").defaultValue = curr_year+((curr_month<10)?"-0"+curr_month:(curr_month))+"-"+((curr_date+1<10)?"0"+(curr_date+1):(curr_date+1));
+            document.getElementById("dateFrom").defaultValue = curr_year+((curr_month<10)?"-0"+curr_month:(curr_month))+"-"+((curr_date<10)?"0"+curr_date:curr_date);
         }
-    </script>
-    <script>
+
         function setInput() {
             <% HttpSession requestSession = request.getSession(false);
             if(requestSession.getAttribute("begin") != null && requestSession.getAttribute("end")!= null){%>
@@ -64,14 +51,14 @@
     <form action="reserve" method="post">
         <div class="input-block" style="height: 150px">
             <p><label>From</label></p>
-            <p><label>To</label></p>
+            <p style="padding-top: 55px"><label>To</label></p>
         </div>
         <div class="text-block" style="height: 150px">
             <p ><input type="date" name="BeginDate" id="dateFrom"></p>
             <p ><input type="date" id="dateTo" name="EndDate"></p>
         </div>
         <input type="hidden" value="<%=room%>" name="room">
-        <center><input type="submit" value="Reserve" style="position: fixed; top: 120px"></center>
+        <input type="submit" value="Reserve" style="width:230px; left:550px;position: fixed; top: 140px">
     </form>
     <div id="errorBlock" style="height: 100px;font-size:16px; top:400px"><%=(httpSession.getAttribute("error")==null)?"":(String)httpSession.getAttribute("error")%></div>
     <form style="top: 450px; position: fixed; right: 75px; width: 250px" method="get" action="account?">

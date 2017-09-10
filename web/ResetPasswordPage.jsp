@@ -64,14 +64,6 @@
 </head>
 
 <body onload="updateClock(); setInterval('updateClock()', 1000 )">
-<%String login = "";
-HttpSession httpSession = request.getSession(false);
-    System.out.println("httpSession attribute = " + httpSession.getAttribute("login"));
-
-    if(httpSession.getAttribute("login")!= null){
-    login = (String)httpSession.getAttribute("login");
-}
-%>
 <div id="wrapper">
     <div id="passwordInfoBlock" style="display: none;">
         Password must consist of
@@ -97,11 +89,8 @@ HttpSession httpSession = request.getSession(false);
             <script src="../Scripts.js">
             </script>
             <p><input type="password" id="confirmedResetPasswordId" name="confirmedResetPassword"></p>
-            <input type="submit" value="Reset">
-
+            <input type="submit" name="buttonReset" value="Reset" style="width: 230px; position:fixed; left: 550px; top:180px">
         </div>
-      <!--  <div id="buttonResetPasswordBlock">
-        </div> -->
     </form>
 
     <div id="errorBlock" style="height: 50px">

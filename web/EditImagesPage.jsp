@@ -20,9 +20,6 @@
         a:visited {color: white;}   /* visited link */
         a:hover {color: white;}     /* mouse over link */
         a:active {color: white;}    /* selected link */
-    </style>
-
-    <style type="text/css">
         #wrapper {margin-left: 10px; margin-right: 10px; margin-top: 10px; height: 600px}
         #dateBlock {font: 24px Kokila, serif;}
         #footer {font: 16px Kokila, serif;}
@@ -40,11 +37,10 @@
 <div id="wrapper">
     <%
         Room room = null;
-        DBProxy dbProxy = new DBProxy();
         List<Image> images = null;
         if (request.getAttribute("room") != null){
             room = (Room)request.getAttribute("room");
-            images = dbProxy.getImagesByRoomNumber(room.getNumber());
+            images = DBProxy.getInstance().getImagesByRoomNumber(room.getNumber());
 
             HttpSession httpSession = request.getSession(true);
             httpSession.setAttribute("room", room);
@@ -52,16 +48,14 @@
 
     %>
     <div id="functionBlock">
-        <form method="post" action="hotel">
+        <form method="post" action="luxury-hotel">
             <input type="submit" value="Log out" style="width: 150px">
         </form>
 
-        <form method="post" action="add-images" enctype='multipart/form-data'>
+        <form method="post" action="add-images" enctype='multipart/form-data' style="position: fixed; left: 50px">
             <p><input name="addImages" accept="image/jpeg,image/gif,image/png" multiple type="file" id="file" class="input-file"></p>
-            <p><label for="file" style="text-decoration: underline"><span class="glyphicon glyphicon-download-alt" style="cursor:hand; top: 140px; padding:7px; font-size: 18px; text-align: center; width: 150px; color: white; background-color: rebeccapurple; border: 2px solid white; border-radius: 10px; position: fixed; height: 55px">
-
-                Pick some new files</span></label></p>
-            <input type="submit" value="Load" style="width: 150px; position: fixed; top:180px; left: 50px">
+            <p><label for="file" style="text-decoration: underline"><span class="glyphicon glyphicon-download-alt" style="cursor:hand; top: 140px; padding:7px; font-size: 18px; text-align: center; width: 150px; color: white; background-color: rebeccapurple; border: 2px solid white; border-radius: 10px; position: fixed; height: 55px">Pick some new files</span></label></p>
+            <input type="submit" value="Load" style="width: 150px; position: fixed; top:170px; left: 50px">
             <%
                 // pass attribute to the AddImagesServlet
                 HttpSession httpSession = request.getSession(true);

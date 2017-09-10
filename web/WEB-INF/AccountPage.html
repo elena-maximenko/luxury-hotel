@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Account</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    <link rel='stylesheet' type="text/css" href='ElementsStyle.css'>
+    <link rel='stylesheet' type="text/css" href='../ElementsStyle.css'>
 </head>
 
 <style type="text/css">
@@ -16,20 +16,45 @@
     #dateBlock {font: 24px Kokila, serif;}
     #footer {font: 16px Kokila, serif;}
 </style>
-    <link rel='stylesheet' type="text/css" href='../ElementsStyle.css'>
+<script>
+    function getSortSelect() {
+        document.getElementById("select-sort").style.display="block";
+        return false;
+    }
+</script>
 </head>
 <body  onload="updateClock(); setInterval('updateClock()', 1000 )">
 <div id="wrapper">
     <div id="functionBlock">
-        <form method="post" action="luxury-hotel">
+        <form method="post" action="luxury-hotel" style="position: fixed; right: 1193px">
             <input type="submit" value="Log out">
         </form>
-        <form> <!-- write action and request method there! -->
-           <!-- <input type="submit" style="position: fixed; width: 150px; top: 90px; left: 50px" value="Send request"/> -->
 
-            <button type="submit" style="background: transparent; border: none; width: 130px; position: fixed; top: 135px; left: 45px">
-                <span class="glyphicon glyphicon-envelope" style="text-align: center; background-color: rebeccapurple; border: 2px solid oldlace; color: oldlace; font: 20px MS Outlook, serif; font-weight: bold; border-radius: 10px"> Send request</span>
+        <form>
+            <button style="position:fixed; top: 200px;width:120px; height: 45px; text-align: center; background-color: rebeccapurple; border: 2px solid oldlace; color: oldlace; font: 20px MS Outlook, serif; font-weight: bold; border-radius: 10px" onclick="return getSortSelect();">
+                <span>Sort</span>
+            </button>
 
+            <p>
+                <select id="select-sort" class="select-role" style="position:fixed; top: 265px; display:none; width: 120px">
+                    <option disabled>Sort by</option>
+                    <option>Number</option>
+                    <option>Price</option>
+                    <option>Capacity</option>
+                </select>
+            </p>
+        </form>
+
+        <form>
+            <button type="submit" style="position:fixed; top: 130px; width:120px; height:50px; margin: auto; background-color: rebeccapurple; font: 20px MS Outlook, serif;
+                                      font-weight: bold; color: oldlace; border-radius: 10px;  border: 2px solid;">
+                <span>Reserved<br>earlier</span>
+            </button>
+        </form>
+
+        <form method="post" action="account" class="glyphicon-form" style="position: fixed; top: 60px; left: 200px">
+            <button type="submit" id="orderButton" class="button-submit-with-icon">
+                <span class="glyphicon glyphicon-sort" style= "padding:7px; font-size: 27px; text-align: center; color: oldlace; border: solid 2px oldlace; background-color: rebeccapurple; border-radius: 30px; width: 45px; height: 45px"></span>
             </button>
         </form>
     </div>
@@ -37,7 +62,7 @@
     <table>
         <tr>
             <td>
-                <div class="entity-info-div" style="padding:10px"><!--style="width: 500px; position: inherit; color: white; height: 183px; font-size: 16px; left: 400px;"> -->
+                <div class="entity-info-div" style="padding:10px">
                     <p><span>Number: # 2></span></p>
                     <p><span>Stuff: fgndmk, </span></p>
                     <p><span>Jumbo-mumbo: vb nm</span></p>
@@ -48,7 +73,6 @@
             <td>
                 <form method="get" class="glyphicon-form">
                     <button type="submit" class="button-submit-with-icon">
-                        <!-- do if room's reserved violet and on form pointer forbid! -->
                         <span class="glyphicon glyphicon-ok" style="padding: 10px; font-size: 22px; float: left; color: limegreen; background-color: white; border-radius: 30px; width: 45px; height: 45px"></span>
                     </button>
                     <input type="hidden" value="<%=rooms.get(i).getNumber()%>" name="room">
@@ -62,7 +86,6 @@
                   </form>
               </td>
         </tr>
-        <%}%>
     </table>
 
 </div>

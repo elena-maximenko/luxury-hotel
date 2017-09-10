@@ -29,6 +29,11 @@ function show(id, text) {
     document.getElementById(id).innerHTML = text;
 }
 
+function getSortSelect() {
+    document.getElementById("selectSort").style.display="block";
+    return false;
+}
+
 function hasNumber(myString) {
     return /\d/.test(myString);
 }

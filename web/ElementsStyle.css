@@ -176,16 +176,16 @@ input[type="submit"] {
    /* margin-left: 55px;
     margin-top: 30px;*/
     margin: auto;
-    margin-top: 50px;
-    margin-right: 50px;
+    margin-top: 55px;
+    margin-left: 40px;
     background-color: rebeccapurple; /*dodgerblue; /*cornflowerblue; /*navy *paleturquoise*/;
     width: 120px;
     height: 45px;
     font: 20px MS Outlook, serif;
     font-weight: bold;
     color: oldlace;
-    border-radius: 10px;
     border: 2px solid;
+    border-radius: 10px;
 }
 
 #errorBlock {
@@ -194,7 +194,7 @@ input[type="submit"] {
     left: 450px;
     top: 325px;
     width: 550px;
-    height: 262px;
+    height: 200px;
     text-align: left;
     color: red  /*maroon/*firebrick/*darkred*/;
     font: bold 16px Constantia, serif;
@@ -328,12 +328,26 @@ input[type="password"]{
     top: 45px;
 }
 
+.input-submit-with-icon{
+    margin: auto;
+    margin-top: 55px;
+    margin-left: 40px;
+    background-color: rebeccapurple; /*dodgerblue; /*cornflowerblue; /*navy *paleturquoise*/;
+    width: 120px;
+    height: 45px;
+    font: 20px MS Outlook, serif;
+    font-weight: bold;
+    color: oldlace;
+    border: 2px solid;
+    border-radius: 10px;
+}
+
 .button-ref {
     margin-left: 70px;
     top: 60px;
     border-style: solid;
     text-decoration: none;
-    background-color: darkslateblue; /*dodgerblue; /*cornflowerblue; /*navy /*paleturquoise*/;
+    background-color: rebeccapurple; /*dodgerblue; /*cornflowerblue; /*navy /*paleturquoise*/;
     width: 270px;
     height: 100px;
     font: 20px MS Outlook, serif;

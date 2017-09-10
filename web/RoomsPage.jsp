@@ -32,15 +32,43 @@
 %>
 <div id="wrapper">
     <div id="functionBlock">
-        <form style="position: fixed; top: 90px;" method="get" action="add-room">
+       <!-- <form style="position: fixed; top: 40px;" method="get" action="add-room">
             <p>Add new room</p>
             <button type="submit" class="button-submit-with-icon">
                 <span class="glyphicon glyphicon-plus-sign" style= "font-size: 46px; text-align: center; color: white; background-color: limegreen; border-radius: 30px; width: 45px; height: 45px"></span>
             </button>
             </p>
+        </form> -->
+        <form style="position: fixed; right: 1055px; top: 10px; width: 300px" method="get" action="add-room">
+            <button type="submit" class="input-submit-with-icon" style="width: 200px">
+                Аdd new room <span class="glyphicon glyphicon-plus"></span>
+            </button>
         </form>
 
-        <!-- check -->
+        <form>
+            <button style="position:fixed; top: 135px; width:200px; height: 45px; text-align: center; background-color: rebeccapurple; border: 2px solid oldlace; color: oldlace; font: 20px MS Outlook, serif; font-weight: bold; border-radius: 10px" onclick="return getSortSelect();"><!--style="background: transparent; border: none; width: 130px; position: fixed; top: 135px; left: 45px" -->
+                <span>Sort</span>
+            </button>
+            <script src="Scripts.js"></script>
+
+            <form method="post" action="admin" class="glyphicon-form">
+                <button type="submit" id="orderButton" class="button-submit-with-icon" style="position: fixed; top: 60px; left: 280px">
+                    <span class="glyphicon glyphicon-sort" style= "padding:7px; font-size: 27px; text-align: center; color: oldlace; border: solid 2px oldlace; background-color: rebeccapurple; border-radius: 30px; width: 45px; height: 45px"></span>
+                </button>
+            </form>
+
+            <p>
+                <select id="select-sort" class="select-role" style="position:fixed; left: 50px; top: 170px; display:none; width: 120px">
+                    <option disabled selected>Sort by </option>
+                    <option value="RoomNumber">Number</option>
+                    <option value="Price">Price</option>
+                    <option value="Capacity">Capacity</option>
+                    <option value="Category">Category</option>
+                    <option value="State">State</option>
+                </select>
+            </p>
+        </form>
+
         <form style="top: 500px; position: fixed; left: 12px; width: 250px" method="get" action="admin">
             <button class="button-submit-with-icon" style="cursor: hand; width: 150px; height: 30px" type="submit">
                 <span style="font: bolder 20px Constantia, serif; color: white; text-decoration: underline">Back to users</span>
@@ -48,20 +76,24 @@
         </form>
     </div>
     <div id="entityBlock">
-        <%  Hotel hotel = Hotel.getInstance();
-            DBProxy dbProxy = new DBProxy();
-            hotel.setRooms(dbProxy.getRooms());
-            List<Room> rooms = hotel.getRooms();
-            for (Room r: rooms) {
-                System.out.println(r.getNumber());
+        <%  List<Room>rooms;
+            if(request.getAttribute("rooms") == null){
+                Hotel hotel = Hotel.getInstance();
+                hotel.setRooms(DBProxy.getInstance().getRooms("Id", "ASC", false));
+                rooms = hotel.getRooms();
+        }
+        else {
+                rooms = (List<Room>)request.getAttribute("rooms");
             }
-            System.out.println(rooms);
-        %>
+             %>
         <table>
-            <%for(int i = 0; i < rooms.size(); i++){%>
+            <%for(int i = 0; i < rooms.size(); i++){
+                DBProxy.getInstance().setRoomsState(rooms.get(i).getNumber(), "MoveInDate", "Occupied");
+                DBProxy.getInstance().setRoomsState(rooms.get(i).getNumber(), "MoveOutDate", "Available");
+            %>
             <tr>
                 <td>
-                <div class="entity-info-div" style="padding:10px"><!--style="width: 500px; position: inherit; color: white; height: 183px; font-size: 16px; left: 400px;"> -->
+                <div class="entity-info-div" style="padding:10px">
                     <p>Number: <span>#<%=rooms.get(i).getNumber()%></span></p>
                     <p><span>Price: <%=rooms.get(i).getPrice()%>$</span></p>
                     <p><span>Category: <%=rooms.get(i).getCategory().getValue()%></span></p>

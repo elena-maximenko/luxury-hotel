@@ -7,7 +7,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    <link rel='stylesheet' type="text/css" href='../ElementsStyle.css'>
+    <link rel='stylesheet' type="text/css" href='ElementsStyle.css'>
 </head>
 
 <style type="text/css">
@@ -15,9 +15,6 @@
     a:visited {color: white;}   /* visited link */
     a:hover {color: white;}     /* mouse over link */
     a:active {color: white;}    /* selected link */
-</style>
-
-<style type="text/css">
     #wrapper {margin-left: 10px; margin-right: 10px; margin-top: 10px; height: 610px}
     #dateBlock {font: 24px Kokila, serif;}
     #footer {font: 16px Kokila, serif;}
@@ -63,7 +60,10 @@
             <p><label for="file"><span class="glyphicon glyphicon-download-alt" style=" cursor: hand; padding:7px; font-size: 18px; text-align: center; color:white; background-color: rebeccapurple; border: 2px solid white; border-radius: 10px; width: 125px; height: 55px">
                 Choose the files</span></label></p>
 
-            <input type="submit" value="OK">
+            <!--<input type="submit" value="OK"> -->
+            <button type="submit" class="input-submit-with-icon" style="width:230px; position: fixed; left: 600px; top: 250px">
+                OK <span class="glyphicon glyphicon-ok" style="font-style: italic"></span>
+            </button>
         </form>
     </div>
     <div id="errorBlock" style="position: fixed; top:400px; height: 100px; width: 400px">

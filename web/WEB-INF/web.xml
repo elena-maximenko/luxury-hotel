@@ -30,21 +30,23 @@
     </filter-mapping>
 
     <servlet>
-        <servlet-name>registrationServlet</servlet-name>
-        <servlet-class>com.hotel.servlets.RegistrationServlet</servlet-class>
+        <servlet-name>signUpServlet</servlet-name>
+        <servlet-class>com.hotel.servlets.SignUpServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
-        <servlet-name>registrationServlet</servlet-name>
-        <url-pattern>/registration</url-pattern>
+        <servlet-name>signUpServlet</servlet-name>
+        <url-pattern>/sign-up</url-pattern>
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>logInServlet</servlet-name>
-        <servlet-class>com.hotel.servlets.LogInServlet</servlet-class>
+        <servlet-name>signInServlet</servlet-name>
+        <servlet-class>com.hotel.servlets.SignInServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
-        <servlet-name>logInServlet</servlet-name>
-        <url-pattern>/log-in</url-pattern>
+        <servlet-name>signInServlet</servlet-name>
+        <url-pattern>/sign-in</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -162,5 +164,14 @@
     <servlet-mapping>
         <servlet-name>reservationServlet</servlet-name>
         <url-pattern>/reserve</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>reservedEarlierServlet</servlet-name>
+        <servlet-class>com.hotel.servlets.ReservedEarlierServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>reservedEarlierServlet</servlet-name>
+        <url-pattern>/reserved-earlier</url-pattern>
     </servlet-mapping>
 </web-app>

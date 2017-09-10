@@ -3,8 +3,9 @@ About this site
 
   This is site of hotel. If you are a registered user, you can watch the rooms in hotel and pick one you want.
   There are two roles for users at this site: admin and client.
-  Admin can edit users, delete and edit rooms and also add and delete images of picked room.
-   User can watch photos of all the hotel rooms and reserve room they want.
+  Admin can edit delete and edit users and rooms and also add and delete images of picked room.
+  User can watch photos of all the hotel rooms and reserve room they want.
+   Also they can to watch earlier reserved rooms in hotel and their photos.
   
 Installation
 ------------
@@ -36,7 +37,6 @@ Libraries and modules
 ---------------------
     
     There is only one module in this application. It is named SummaryTask4. In current application Tomcat, MySQL, Log4j, commons-email, commons-fileupload, commons-io are used.
-    Test for this web site via JUnit are planned.
     
     Adding Maven support is considered.
     

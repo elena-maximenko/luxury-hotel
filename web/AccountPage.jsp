@@ -1,8 +1,6 @@
-<%@ page import="com.hotel.entity.Hotel" %>
 <%@ page import="com.hotel.util.DBProxy" %>
 <%@ page import="com.hotel.entity.Room" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.hotel.enums.State" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -14,39 +12,132 @@
 
     <link rel='stylesheet' type="text/css" href='ElementsStyle.css'>
 </head>
-
 <style type="text/css">
     #wrapper {margin-left: 10px; margin-right: 10px; margin-top: 10px; height: 600px}
     #dateBlock {font: 24px Kokila, serif;}
     #footer {font: 16px Kokila, serif;}
 </style>
 <link rel='stylesheet' type="text/css" href='../ElementsStyle.css'>
-</head>
+
+<!--<script>
+    function getSortSelect() {
+        document.getElementById("selectSort").style.display="block";
+        return false;
+    }
+
+    function predicateBy(prop){
+        return function(a,b){
+            if( a[prop] > b[prop]){
+                return 1;
+            }else if( a[prop] < b[prop] ){
+                return -1;
+            }
+            return 0;
+        }
+    }
+
+    function compareBy(thing) {
+        var r = $('#sortInputId').val();
+        console.log(r);
+        var arr = $.parseJSON(r);
+        for(var i = 0; i < arr.length; i++){
+            console.log(arr[i]);
+        }
+        arr.sort( predicateBy(thing) );
+        for(var i = 0; i < arr.length; i++){
+            console.log(arr[i]);
+        }
+        return r;//r.sort( predicateBy(thing) );
+    }
+</script>  -->
+
+<body onload="updateClock(); setInterval('updateClock()', 1000 )">
 <%
     HttpSession ses = request.getSession(false);
     String token = (String)ses.getAttribute("userToken");
+    String login = (String)ses.getAttribute("login");
 
     HttpSession httpSession = request.getSession(true);
     httpSession.setAttribute("userToken", token);
-%>
-<%  Hotel hotel = Hotel.getInstance();
-    DBProxy dbProxy = new DBProxy();
-    hotel.setRooms(dbProxy.getRooms());
-    List<Room> rooms = hotel.getRooms();
-%>
-<body  onload="updateClock(); setInterval('updateClock()', 1000 )">
+    httpSession.setAttribute("login", login);
+    httpSession.setAttribute("isReservedEarlier", false);
 
+    List<Room> rooms = (request.getAttribute("rooms")==null?DBProxy.getInstance().getRooms("RoomNumber", "ASC", false):(List<Room>)request.getAttribute("rooms"));
+  /*  Hotel.getInstance().setRooms(DBProxy.getRooms());
+    List<Room> rooms = Hotel.getInstance().getRooms();
+
+    // pass from jsp to js-function
+    JSONArray jsRooms = new JSONArray();
+
+    JSONObject tmp;
+
+    for (int i = 0; i < rooms.size(); i++) {
+        tmp = new JSONObject();
+        tmp.put("Number", rooms.get(i).getNumber());
+        tmp.put("Price", rooms.get(i).getPrice());
+        tmp.put("Capacity", rooms.get(i).getCapacity());
+        tmp.put("Category", rooms.get(i).getCategory());
+        tmp.put("State", rooms.get(i).getState());
+
+        jsRooms.put(tmp);
+    }
+    //System.out.println(jsRooms);*/
+%>
+<script>
+    function sortRooms() {
+        var el = document.getElementById("selectSort");
+        var selectedValue = el.options[el.selectedIndex].value;
+
+        if(selectedValue === "Price"){
+            document.getElementById("wrapper").style.backgroundColor  = "red";
+            var arr = compareBy("Price");
+
+            document.getElementById("sortInputId").value = arr;
+
+           /* $('myForm').submit();
+
+            /*$.ajax({
+                type: "POST",
+                url: "account",
+                data: { 'param': arr }
+            })*/
+        }
+    }
+</script>
 <div id="wrapper">
     <div id="functionBlock">
-        <form method="post" action="luxury-hotel">
+        <form method="post" action="luxury-hotel" style="position: fixed; right: 1193px">
             <input type="submit" value="Log out">
         </form>
-        <form> <!-- write action and request method there! -->
-            <!--<button type="submit" style="background: transparent; border: none; width: 130px; position: fixed; top: 135px; left: 45px">
-                <!--<span class="glyphicon glyphicon-envelope" style="text-align: center; background-color: rebeccapurple; border: 2px solid oldlace; color: oldlace; font: 20px MS Outlook, serif; font-weight: bold; border-radius: 10px"> Send request</span> -->
-            <button type="submit" style="width:120px; height:50px; margin: auto; background-color: rebeccapurple; font: 20px MS Outlook, serif;
+
+        <form method="get" action="reserved-earlier">
+            <button type="submit" style="position:fixed; top:127px; width:120px; height:50px; margin: auto; background-color: rebeccapurple; font: 20px MS Outlook, serif;
                                       font-weight: bold; color: oldlace; border-radius: 10px;  border: 2px solid;">
                 <span>Reserved<br>earlier</span>
+            </button>
+        </form>
+
+        <form method="post" action="account">
+            <button style="position:fixed; top: 200px;width:120px; height: 45px; text-align: center; background-color: rebeccapurple; border: 2px solid oldlace; color: oldlace; font: 20px MS Outlook, serif; font-weight: bold; border-radius: 10px" onclick="return getSortSelect();">
+                <span>Sort</span>
+            </button>
+            <script src="Scripts.js"></script>
+
+            <p>
+                <select name="selectSort" id="selectSort" onchange="this.form.submit();" class="select-role" style="position:fixed; top: 255px; display:none; width: 120px">
+                    <option selected disabled>Sort by</option>
+                    <option value="RoomNumber">Number</option>
+                    <option value="Price">Price</option>
+                    <option value="Capacity">Capacity</option>
+                    <option value="Category">Category</option>
+                    <option value="State">State</option>
+                </select>
+            </p>
+        </form>
+
+        <form method="post" action="account" class="glyphicon-form" style="position: fixed; top: 60px; left: 200px">
+            <button type="submit" id="orderButton" class="button-submit-with-icon">
+                <span class="glyphicon glyphicon-sort" style= "padding:7px; font-size: 27px; text-align: center; color: oldlace; border: solid 2px oldlace; background-color: rebeccapurple; border-radius: 30px; width: 45px; height: 45px"></span>
             </button>
         </form>
     </div>
@@ -54,22 +145,8 @@
     <div id="entityBlock">
         <table>
             <%for(int i = 0; i < rooms.size(); i++){
-            java.sql.Date today = dbProxy.getCurrentDate();
-                java.sql.Date moveIn = dbProxy.get("MoveInDate", rooms.get(i).getNumber());
-                if(moveIn != null){
-                    if (today.toString().equals(moveIn.toString())){
-                        //rooms.get(i).setState(State.valueOf("OCCUPIED"));
-                        Hotel.getInstance().setRoom(rooms.get(i).getNumber(), dbProxy.changeState("Occupied", rooms.get(i).getNumber()));
-                    }
-                }
-
-                java.sql.Date moveOut = dbProxy.get("MoveOutDate", rooms.get(i).getNumber());
-                if(moveOut != null){
-                    if (today.toString().equals(moveOut.toString())){
-                        //rooms.get(i).setState(State.valueOf("AVAILABLE"));
-                        Hotel.getInstance().setRoom(rooms.get(i).getNumber(), dbProxy.changeState("Available", rooms.get(i).getNumber()));
-                    }
-                }
+                DBProxy.getInstance().setRoomsState(rooms.get(i).getNumber(), "MoveInDate", "Occupied");
+                DBProxy.getInstance().setRoomsState(rooms.get(i).getNumber(), "MoveOutDate", "Available");
             %>
             <tr>
                 <td>
@@ -99,7 +176,6 @@
                         <button type="submit" class="button-submit-with-icon">
                             <span class="glyphicon glyphicon-eye-open" style= "padding: 10px; text-align: center; color: rebeccapurple; background-color: white; border: 2px solid white; border-radius: 30px; width: 45px; height: 45px"></span>
                         </button>
-
                     </form>
                 </td>
             </tr>
