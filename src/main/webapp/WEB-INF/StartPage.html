@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Start page</title>
+    <link rel='stylesheet' type="text/css" href='../ElementsStyle.css'>
+    <link rel="shortcut icon" type='image/x-icon' href="../titlePic.ico" />
+</head>
+<body onload="updateClock(); setInterval('updateClock()', 1000 )">
+<div id="wrapper" style="height: 30px">
+    <div id="welcomeBlock">Welcome to our site!
+        <div id="infoBlock">It's hotel site and
+            You can book rooms here.
+
+        </div>
+    </div>
+    <div id="leftBlock">
+        <label>Don't have an account yet?</label>
+        <form>
+            <a href="sign-up" class="button-ref" name="buttonRefRegistration">Sign up</a>
+        </form>
+    </div>
+    <div id="rightBlock">
+        <form method="get" action="sign-in">
+            <a href="sign-in" class="button-ref" name="buttonRefLogin">Log in</a>
+        </form>
+    </div>
+</div><!--style="background-color:deepskyblue;padding:200px;"> -->
+<div id="dateBlock"> <span id="clock">&nbsp;</span>
+    <script src="../Scripts.js">
+    </script>
+</div>
+<div id="footer"><!--align="right"; style="padding-bottom:1%" -->Created by Elena Maximenko</div>
+</body>
+</html>

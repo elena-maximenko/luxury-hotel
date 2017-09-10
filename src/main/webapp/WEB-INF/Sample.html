@@ -1,0 +1,155 @@
+<html>
+<head>
+    <title>Rooms</title>
+
+    <link rel='stylesheet' type="text/css" href='../ElementsStyle.css'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+        function setDefaultDate() {
+            var d = new Date();
+            var curr_date = d.getDate();
+            var curr_month = d.getMonth() + 1;
+            var curr_year = d.getFullYear();
+
+            if(curr_month < 10){
+                document.getElementById("dateFrom").min = curr_year+"-0"+curr_month+"-"+curr_date;
+                document.getElementById("dateFrom").max = curr_year+"-0"+(curr_month+1)+"-"+curr_date;
+
+                document.getElementById("dateTo").min = curr_year+"-0"+curr_month+"-"+(curr_date+1);
+                document.getElementById("dateTo").max = curr_year+"-0"+(curr_month+1)+"-"+curr_date;
+
+                document.getElementById("dateTo").defaultValue = curr_year+"-0"+curr_month+"-"+(curr_date+1);
+                document.getElementById("dateFrom").defaultValue = curr_year+"-0"+curr_month+"-"+curr_date;
+            }
+            else {
+                document.getElementById("dateFrom").min = curr_year+"-"+curr_month+"-"+curr_date;
+                document.getElementById("dateFrom").max = curr_year+"-"+(curr_month+1)+"-"+curr_date;
+
+                document.getElementById("dateTo").min = curr_year+"-"+curr_month+"-"+(curr_date+1);
+                document.getElementById("dateTo").max = curr_year+"-"+(curr_month+1)+"-"+curr_date;
+
+                document.getElementById("dateTo").defaultValue = curr_year+"-"+curr_month+"-"+(curr_date+1);
+                document.getElementById("dateFrom").defaultValue = curr_year+"-"+curr_month+"-"+curr_date;
+            }
+        }
+    </script>
+
+    <script>
+
+    </script>
+
+    <!--  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  -->
+    <!--                            LOOK HERE                                    -->
+    <!--  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  -->
+    <script>
+        function changeColor() {
+            var el = document.getElementById("select-sort");
+            var selectedValue = el.options[el.selectedIndex].value;
+
+            if(selectedValue === "white"){
+                document.getElementById("wrapper").style.backgroundColor  = "white";
+            }
+            if(selectedValue === "black"){
+                document.getElementById("wrapper").style.backgroundColor  = "black";
+            }
+            return false;
+        }
+        function getSortSelect() {
+            document.getElementById("select-sort").style.display="block";
+            return false;
+        }
+    </script>
+    <!--            document.getElementById("wrapper").style.backgroundColor  = "white";
+-->
+</head>
+<body onload="updateClock(); setInterval('updateClock()', 1000 );setDefaultDate()">
+<div id="wrapper">
+    <div id="functionBlock">
+        <form method="post" action="luxury-hotel">
+            <input type="submit" value="Log out">
+        </form>
+
+        <form>
+            <button type="submit" style="position:fixed; top:127px; width:120px; height:50px; margin: auto; background-color: rebeccapurple; font: 20px MS Outlook, serif;
+                                      font-weight: bold; color: oldlace; border-radius: 10px;  border: 2px solid;">
+                <span>Reserved<br>earlier</span>
+                <input type="hidden" value="<%=login%>" name="login">
+            </button>
+        </form>
+
+        <form>
+            <button style="position:fixed; top: 200px;width:120px; height: 45px; text-align: center; background-color: rebeccapurple; border: 2px solid oldlace; color: oldlace; font: 20px MS Outlook, serif; font-weight: bold; border-radius: 10px" onclick="return getSortSelect();"><!--style="background: transparent; border: none; width: 130px; position: fixed; top: 135px; left: 45px" -->
+                <span>Sort</span>
+            </button>
+
+            <p>
+                <select id="select-sort" class="select-role" style="position:fixed; top: 255px; display:none; width: 120px" onchange="changeColor()">
+                    <option disabled selected>Sort by...</option>
+                    <option value="black">Number</option>
+                    <option value="white">Price</option>
+                    <option>Capacity</option>
+                </select>
+            </p>
+        </form>
+
+        <form class="glyphicon-form" style="position: fixed; top: 60px; left: 200px">
+            <span class="glyphicon glyphicon-sort" style= "padding:5px; font-size: 30px; text-align: center; color: white; background-color: rebeccapurple; border: solid white 2px; border-radius: 30px; width: 45px; height: 45px"></span>
+        </form>
+
+    </div>
+<div id="entityBlock" style="background-color: black">
+</div>
+
+   <!-- <div id="functionBlock">
+        <form style="position: fixed; top: 40px;" method="get" action="add-room">
+            <p>Add new room</p>
+            <button type="submit" class="button-submit-with-icon">
+                <span class="glyphicon glyphicon-plus-sign" style= "font-size: 46px; text-align: center; color: white; background-color: limegreen; border-radius: 30px; width: 45px; height: 45px"></span>
+            </button>
+            </p>
+        </form>
+
+        <form>
+            <button style="position:fixed; top: 115px;width:120px; height: 45px; text-align: center; background-color: rebeccapurple; border: 2px solid oldlace; color: oldlace; font: 20px MS Outlook, serif; font-weight: bold; border-radius: 10px" onclick="return getSortSelect();"><!--style="background: transparent; border: none; width: 130px; position: fixed; top: 135px; left: 45px"
+                <span>Sort</span>
+            </button>
+
+            <p>
+                <select id="select-sort" class="select-role" style="position:fixed; top: 170px; display:none; width: 120px"onchange="changeColor()">
+                    <option disabled>Sort by...</option>
+                    <option value="white">Number</option>
+                    <option value="black">Price</option>
+                    <option>Capacity</option>
+                </select>
+            </p>
+        </form>
+
+        <form style="top: 500px; position: fixed; left: 12px; width: 250px" method="get" action="admin">
+            <button class="button-submit-with-icon" style="cursor: hand; width: 150px; height: 30px" type="submit">
+                <span style="font: bolder 20px Constantia, serif; color: white; text-decoration: underline">Back to users</span>
+            </button>
+        </form>
+    </div> -->
+    <!--<form>  write action and request method there! -->
+        <!--<button type="submit" style="background: transparent; border: none; width: 130px; position: fixed; top: 135px; left: 45px">
+            <!--<span class="glyphicon glyphicon-envelope" style="text-align: center; background-color: rebeccapurple; border: 2px solid oldlace; color: oldlace; font: 20px MS Outlook, serif; font-weight: bold; border-radius: 10px"> Send request</span>
+        <button type="submit" style="width:120px; height:50px; margin: auto; background-color: rebeccapurple; font: 20px MS Outlook, serif;
+                                      font-weight: bold; color: oldlace; border-radius: 10px;  border: 2px solid;">
+            <span>Reserved<br>earlier</span>
+            </button>
+    </form>
+    <form method="post" action="luxury-hotel">
+        <input type="submit" value="Log out">
+    </form> -->
+</div>
+<div id="dateBlock"> <span id="clock">&nbsp;</span>
+    <script src="../Scripts.js">
+    </script>
+</div>
+<div id="footer">Created by Elena Maximenko</div>
+</body>
+</html>
