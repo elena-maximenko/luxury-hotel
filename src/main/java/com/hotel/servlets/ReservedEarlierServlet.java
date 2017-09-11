@@ -16,12 +16,8 @@ import java.io.IOException;
 public class ReservedEarlierServlet extends HttpServlet{
     private int counter;
     private ErrorProcessor errorProcessor = new ErrorProcessor();
-    public void init(){
-        System.out.println(this+".init()");
-    }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
-        System.out.println(this + ".doGet()");
         try{
             TokenChecker.checkUserToken(request, response, "ReservedEarlierPage.jsp");
         }
@@ -32,8 +28,6 @@ public class ReservedEarlierServlet extends HttpServlet{
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
         String field;
-
-        System.out.println(this + ".doPost()");
 
         String order = (counter%2==0)?"DESC":"ASC";
         counter++;

@@ -19,14 +19,9 @@ import java.util.List;
 public class AdminServlet extends HttpServlet{
     private int counter = 0;
 
-    public void init(){
-        System.out.println(this + ".init()");
-    }
     private ErrorProcessor errorProcessor = new ErrorProcessor();
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
-        System.out.println(this + ".doGet()");
-
         try{
             TokenChecker.checkToken(request, response, "AdminPage.jsp");
         }
@@ -37,21 +32,16 @@ public class AdminServlet extends HttpServlet{
     }
 
     public void doPost (HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
-        System.out.println(this + ".doPost()");
         String login = request.getParameter(NamesOfElements.LOGIN);//.HIDDEN_LOGIN);
 
         if(login == null){
             String order = (counter%2==0)?"DESC":"ASC";
             counter++;
 
-            System.out.println("order = " + order);
-
             String field = "";
             HttpSession session = request.getSession(false);
             if(request.getParameter(NamesOfElements.SORT)!= null){
                 field = request.getParameter(NamesOfElements.SORT);
-                System.out.println("field = " + field);
-                HttpSession httpSession = request.getSession(true);
                 session.setAttribute("field", field);
             }
             else if(session.getAttribute("field")!= null){
@@ -63,7 +53,6 @@ public class AdminServlet extends HttpServlet{
 
             List<User> users = DBProxy.getInstance().getUsers(field, order);
             request.setAttribute("users", users);
-
         }
         else {
             try{

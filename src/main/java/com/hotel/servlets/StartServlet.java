@@ -20,19 +20,12 @@ import java.util.ArrayList;
 
 public class StartServlet extends HttpServlet{
     ErrorProcessor errorProcessor = new ErrorProcessor();
-    public void init(){
-        System.out.println(this + ".init()");
-    }
-
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        System.out.println(this + ".doGet()");
-
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/WEB-INF/StartPage.html");
         requestDispatcher.forward(request, response);
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
-        System.out.println(this + "doPost()");
         String token = "";
         HttpSession httpSession = request.getSession(false);
         if(httpSession.getAttribute("token") != null){
@@ -41,7 +34,6 @@ public class StartServlet extends HttpServlet{
         else if(httpSession.getAttribute("userToken")!= null){
             token = (String)httpSession.getAttribute("userToken");
         }
-        //System.out.println("token = " + token);
 
         try {
             DBProxy.getInstance().delete(token, DBProxy.getQueryDeleteToken());

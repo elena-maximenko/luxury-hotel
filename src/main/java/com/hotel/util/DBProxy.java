@@ -18,7 +18,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-// put mysql-connector.jar in CATALINA_HOME\lib
 public class DBProxy {
     private static DBProxy instance;
 
@@ -175,7 +174,7 @@ public class DBProxy {
         }
     }
 
-    public /*static*/ void initialize() throws SQLException {
+    public void initialize() throws SQLException {
         createDBIfNotExist();
 
         List<String> queries = Arrays.asList(
@@ -275,7 +274,7 @@ public class DBProxy {
         }
     }
 
-    private /*static*/ void createDBIfNotExist() throws SQLException {
+    private void createDBIfNotExist() throws SQLException {
         try (Connection connection = DriverManager.getConnection(DBConstants.URL_WITHOUT_DB)) {
             connection.setClientInfo("user", DBConstants.USER);
             connection.setClientInfo("password", DBConstants.PASSWORD);
@@ -285,16 +284,16 @@ public class DBProxy {
         }
     }
 
-    private /*static*/ void execute(String query) throws SQLException {
+    private void execute(String query) throws SQLException {
         try (Connection connection = DriverManager.getConnection(DBConstants.URL, DBConstants.USER, DBConstants.PASSWORD)) {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.execute();
         }
     }
 
-    private /*static*/ String imageDir = new AddRoomServlet().getImagesDir();
+    private String imageDir = new AddRoomServlet().getImagesDir();
 
-    private /*static*/ boolean isEmpty(String table) throws SQLException {
+    private boolean isEmpty(String table) throws SQLException {
         try (Connection connection = DriverManager.getConnection(DBConstants.URL, DBConstants.USER, DBConstants.PASSWORD)) {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM " + table);
@@ -302,7 +301,7 @@ public class DBProxy {
         }
     }
 
-    private /*static*/ boolean containsLogin(String table) throws SQLException {
+    private boolean containsLogin(String table) throws SQLException {
         String field = (table.equals("Emails") ? "Email" : "Login");
         String querySelectFromEmailsByLogin = "SELECT * FROM " + table + " WHERE " + field + " LIKE \"amely.honey@gmail.com\"";
         try (Connection connection = DriverManager.getConnection(DBConstants.URL, DBConstants.USER, DBConstants.PASSWORD)) {
@@ -312,7 +311,7 @@ public class DBProxy {
         }
     }
 
-    public /*static*/ boolean findUser(String login) {
+    public boolean findUser(String login) {
         String querySelectByLogin = "SELECT UserPassword FROM Users WHERE Login LIKE ?";// + "\"" + login + "\"";
         try (Connection connection = DriverManager.getConnection(DBConstants.URL, DBConstants.USER, DBConstants.PASSWORD)) {
             PreparedStatement preparedStatement = connection.prepareStatement(querySelectByLogin);
@@ -325,7 +324,7 @@ public class DBProxy {
         }
     }
 
-    public /*static*/ void changeRoleByLogin(String login, String role) throws SQLException {
+    public void changeRoleByLogin(String login, String role) throws SQLException {
         String queryUpdateUsersRole = "UPDATE Users SET Role = ? WHERE Login LIKE ?";
         try (Connection connection = DriverManager.getConnection(DBConstants.URL, DBConstants.USER, DBConstants.PASSWORD)) {
             PreparedStatement preparedStatement = connection.prepareStatement(queryUpdateUsersRole);
@@ -335,7 +334,7 @@ public class DBProxy {
         }
     }
 
-    public /*static*/ User getUserByLogin(String userLogin) {
+    public User getUserByLogin(String userLogin) {
         String querySelectUserByLogin = "SELECT * FROM Users WHERE Login LIKE ?";
         try (Connection connection = DriverManager.getConnection(DBConstants.URL, DBConstants.USER, DBConstants.PASSWORD)) {
             PreparedStatement preparedStatement = connection.prepareStatement(querySelectUserByLogin);
@@ -358,19 +357,7 @@ public class DBProxy {
         }
     }
 
-   /* private static int getId(int number, String query) throws SQLException {
-        int id = -1;
-        try (Connection connection = DriverManager.getConnection(DBConstants.URL, DBConstants.USER, DBConstants.PASSWORD)) {
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, int);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            resultSet.next();
-            id = resultSet.getInt("Id");
-        }
-        return id;
-    }*/
-
-    private /*static*/ int getId(String string, String query) throws SQLException {
+    private int getId(String string, String query) throws SQLException {
         int id = -1;
         try (Connection connection = DriverManager.getConnection(DBConstants.URL, DBConstants.USER, DBConstants.PASSWORD)) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -382,7 +369,7 @@ public class DBProxy {
         return id;
     }
 
-    public /*static*/ List<User> getUsers(String field, String order) {
+    public List<User> getUsers(String field, String order) {
         List<User> users = new ArrayList<>();
         String querySelectUsers = "SELECT * FROM Users ORDER BY " + field + " " + order;
 
@@ -407,7 +394,7 @@ public class DBProxy {
         }
     }
 
-    public /*static*/ String getUserPassword(String login, String table) {
+    public String getUserPassword(String login, String table) {
         String querySelectPassword = "SELECT " + (table.equals("Users") ? "UserPassword" : "AdminPassword") + " FROM " + table +
                 " WHERE " + (table.equals("Users") ? "Login" : "Email") + " LIKE \"" + login + "\"";
 
@@ -423,12 +410,12 @@ public class DBProxy {
         }
     }
 
-    private /*static*/ String generateUId() {
+    private String generateUId() {
         UUID uuid = UUID.randomUUID();
         return uuid.toString();
     }
 
-    public /*static*/ void insertUser(String firstName, String lastName, String login, String password) throws SQLException {
+    public void insertUser(String firstName, String lastName, String login, String password) throws SQLException {
         String queryInsertInUsers = "INSERT INTO Users (UId, Role, Login, FirstName, LastName, UserPassword) VALUES(?, ?, ?, ?, ?, ?)";
         String uId = generateUId();
         try (Connection connection = DriverManager.getConnection(DBConstants.URL, DBConstants.USER, DBConstants.PASSWORD)) {
@@ -444,7 +431,7 @@ public class DBProxy {
         }
     }
 
-    public /*static*/ void changePassword(String login, String password) throws SQLException {
+    public void changePassword(String login, String password) throws SQLException {
         String queryUpdatePassword = "UPDATE Users SET UserPassword = ? WHERE Login LIKE ?";
         try (Connection connection = DriverManager.getConnection(DBConstants.URL, DBConstants.USER, DBConstants.PASSWORD)) {
             PreparedStatement preparedStatement = connection.prepareStatement(queryUpdatePassword);
@@ -454,7 +441,7 @@ public class DBProxy {
         }
     }
 
-    public /*static*/ void insertToken(String token) throws SQLException {
+    public void insertToken(String token) throws SQLException {
         String queryInsertInTokens = "INSERT INTO Tokens (UId, Content) VALUES (?, ?)";
         String uId = generateUId();
         try (Connection connection = DriverManager.getConnection(DBConstants.URL, DBConstants.USER, DBConstants.PASSWORD)) {
@@ -465,7 +452,7 @@ public class DBProxy {
         }
     }
 
-    public /*static*/ void insertUserToken(String login, String token) throws SQLException {
+    public void insertUserToken(String login, String token) throws SQLException {
         String queryInsertInUserTokens = "INSERT INTO UserTokens (UId, UserID, TokenId) VALUES (?, ?, ?)";
         try (Connection connection = DriverManager.getConnection(DBConstants.URL, DBConstants.USER, DBConstants.PASSWORD)) {
             String userId = String.valueOf(getId(login, getQuerySelectIdFromUsers()));
@@ -481,7 +468,7 @@ public class DBProxy {
         }
     }
 
-    public /*static*/ String getLoginByToken(String token) throws SQLException {
+    public String getLoginByToken(String token) throws SQLException {
         String querySelectLoginByToken = "SELECT Login FROM Tokens AS t LEFT JOIN UserTokens AS ut ON t.Id = ut.TokenId LEFT JOIN Users as u ON ut.UserId = u.Id WHERE Content LIKE ?";
         String login;
         try (Connection connection = DriverManager.getConnection(DBConstants.URL, DBConstants.USER, DBConstants.PASSWORD)) {
@@ -495,7 +482,7 @@ public class DBProxy {
         return login;
     }
 
-    public /*static*/ void delete(String value, String query) throws SQLException {
+    public void delete(String value, String query) throws SQLException {
         try (Connection connection = DriverManager.getConnection(DBConstants.URL, DBConstants.USER, DBConstants.PASSWORD)) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, value);
@@ -503,7 +490,7 @@ public class DBProxy {
         }
     }
 
-    public /*static*/ Room insertRoom(int number, String category, double price, String capacity, String state) throws SQLException {
+    public Room insertRoom(int number, String category, double price, String capacity, String state) throws SQLException {
         String queryInsertInRooms = "INSERT INTO Rooms (UId, RoomNumber, Category, Price, Capacity, State) VALUES (?, ?, ?, ?, ?, ?)";
         String uId = generateUId();
         try (Connection connection = DriverManager.getConnection(DBConstants.URL, DBConstants.USER, DBConstants.PASSWORD)) {
@@ -523,7 +510,7 @@ public class DBProxy {
         }
     }
 
-    public /*static*/ int getId(int number, String query) throws SQLException {
+    public int getId(int number, String query) throws SQLException {
         try (Connection connection = DriverManager.getConnection(DBConstants.URL, DBConstants.USER, DBConstants.PASSWORD)) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, ((number > 0) ? number : Math.abs(number)));
@@ -533,7 +520,7 @@ public class DBProxy {
         }
     }
 
-    public /*static*/ Image insertImage(String url, int roomId) throws SQLException {
+    public Image insertImage(String url, int roomId) throws SQLException {
         String queryInsertInImages = "INSERT INTO Images (UId, Url, RoomId) VALUES (?, ?, ?)";
         String uId = generateUId();
         try (Connection connection = DriverManager.getConnection(DBConstants.URL, DBConstants.USER, DBConstants.PASSWORD)) {
@@ -547,9 +534,9 @@ public class DBProxy {
         }
     }
 
-    public /*static*/ List<Room> getRooms(String field, String order, boolean isReserved) {
+    public List<Room> getRooms(String field, String order, boolean isReserved) {
         String querySelectRooms;
-        if (isReserved) {//field.equals("MoveInDate") || field.equals("MoveOutDate")){
+        if (isReserved) {
             querySelectRooms = "SELECT RoomNumber, Price, Category, Capacity, State FROM Journal AS j JOIN Rooms AS r ON j.RoomId = r.Id\n" +
                     "ORDER BY " + field + " " + order;
         } else {
@@ -578,7 +565,7 @@ public class DBProxy {
         }
     }
 
-    public /*static*/ void delete(int number, String query) throws SQLException {
+    public void delete(int number, String query) throws SQLException {
         try (Connection connection = DriverManager.getConnection(DBConstants.URL, DBConstants.USER, DBConstants.PASSWORD)) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, number);
@@ -586,7 +573,7 @@ public class DBProxy {
         }
     }
 
-    public /*static*/ Date getCurrentDate() throws SQLException {
+    public Date getCurrentDate() throws SQLException {
         try (Connection connection = DriverManager.getConnection(DBConstants.URL, DBConstants.USER, DBConstants.PASSWORD)) {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT current_date() AS Today");
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -595,7 +582,7 @@ public class DBProxy {
         }
     }
 
-    public /*static*/ Time getCurrentTime() throws SQLException {
+    public Time getCurrentTime() throws SQLException {
         try (Connection connection = DriverManager.getConnection(DBConstants.URL, DBConstants.USER, DBConstants.PASSWORD)) {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT current_time() AS CurrTime");
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -604,7 +591,7 @@ public class DBProxy {
         }
     }
 
-    private /*static*/ Date get(String field, int number) throws SQLException {
+    private Date get(String field, int number) throws SQLException {
         String queryGetDateByRoomNumber = "SELECT " + field + " FROM Journal AS j LEFT JOIN Rooms AS  r ON (r.Id = j.RoomId)\n" +
                 "WHERE RoomNumber = ? ORDER BY " + field + " DESC\n" +
                 "LIMIT 1";
@@ -619,8 +606,7 @@ public class DBProxy {
         }
     }
 
-    // check tomorrow !!!
-    public /*static*/ void setRoomsState(int roomNumber, String field, String state) throws SQLException {
+    public void setRoomsState(int roomNumber, String field, String state) throws SQLException {
         java.sql.Date date = get(field, roomNumber);
         java.sql.Date today = getCurrentDate();
 
@@ -654,7 +640,7 @@ public class DBProxy {
         }
     }
 
-    public /*static*/ Time getExpireTime() throws SQLException {
+    public Time getExpireTime() throws SQLException {
         try (Connection connection = DriverManager.getConnection(DBConstants.URL, DBConstants.USER, DBConstants.PASSWORD)) {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT \"12:00:00\" AS ExpireTime");
@@ -663,7 +649,7 @@ public class DBProxy {
         }
     }
 
-    public /*static*/ Time getTimeDifference() throws SQLException {
+    public Time getTimeDifference() throws SQLException {
         try (Connection connection = DriverManager.getConnection(DBConstants.URL, DBConstants.USER, DBConstants.PASSWORD)) {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT timediff(current_time(), \"12:00:00\") AS TimeDiff");
@@ -671,7 +657,7 @@ public class DBProxy {
         }
     }
 
-    public /*static*/ Room getRoomByNumber(int number) throws SQLException {
+    public Room getRoomByNumber(int number) throws SQLException {
         String querySelectRoomByNumber = "SELECT * FROM Rooms WHERE RoomNumber = ?";
         try (Connection connection = DriverManager.getConnection(DBConstants.URL, DBConstants.USER, DBConstants.PASSWORD)) {
             PreparedStatement preparedStatement = connection.prepareStatement(querySelectRoomByNumber);
@@ -694,7 +680,7 @@ public class DBProxy {
         }
     }
 
-    public /*static*/ List<Image> getImagesByRoomNumber(int number) throws SQLException {
+    public List<Image> getImagesByRoomNumber(int number) throws SQLException {
         String querySelectImagesByRoomNumber = "SELECT Url, i.UId, RoomId, RoomNumber FROM Images AS i RIGHT JOIN Rooms As r ON (i.RoomId = r.Id) WHERE RoomNumber = ?";
         List<Image> images = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection(DBConstants.URL, DBConstants.USER, DBConstants.PASSWORD)) {
@@ -710,7 +696,7 @@ public class DBProxy {
         return images;
     }
 
-    public /*static*/ void updateRoomByNumber(int newNumber, String category, double price, String capacity, String state, int oldNumber) throws SQLException {
+    public void updateRoomByNumber(int newNumber, String category, double price, String capacity, String state, int oldNumber) throws SQLException {
         String updateRoomByNumber = "UPDATE Rooms SET RoomNumber = ?," +
                 "Category = ?, Price = ?, Capacity = ?, State = ? WHERE RoomNumber = ?";
         try (Connection connection = DriverManager.getConnection(DBConstants.URL, DBConstants.USER, DBConstants.PASSWORD)) {
@@ -726,7 +712,7 @@ public class DBProxy {
         }
     }
 
-    public /*static*/ Room changeState(String state, int number) throws SQLException {
+    public Room changeState(String state, int number) throws SQLException {
         try (Connection connection = DriverManager.getConnection(DBConstants.URL, DBConstants.USER, DBConstants.PASSWORD)) {
             PreparedStatement preparedStatement = connection.prepareStatement("UPDATE Rooms\n" +
                     "SET State = ? WHERE RoomNumber = ?");
@@ -740,7 +726,7 @@ public class DBProxy {
         }
     }
 
-    public /*static*/ void insertInJournal(String login, int roomNumber, Date moveIn, Date moveOut) throws SQLException {
+    public void insertInJournal(String login, int roomNumber, Date moveIn, Date moveOut) throws SQLException {
         int roomId = getId(roomNumber, getQuerySelectIdFromRooms());
         int userId = getId(login, getQuerySelectIdFromUsers());
 
@@ -758,7 +744,7 @@ public class DBProxy {
     }
 
     // if the same user's reserved one room few times
-    public /*static*/ List<Integer> getJournalId(int number, String login) throws SQLException {
+    public List<Integer> getJournalId(int number, String login) throws SQLException {
         String query = "SELECT j.Id FROM Journal AS j\n" +
                 "LEFT JOIN Rooms AS r ON (j.RoomId=r.Id) LEFT JOIN Users AS u ON (j.UserId = u.Id)\n" +
                 "WHERE r.RoomNumber = ? AND u.Login LIKE ?";
@@ -775,12 +761,38 @@ public class DBProxy {
         return journalIds;
     }
 
-    public /*static*/ Date getDate(int jId, String field) throws SQLException {
+    public int getRoomNumberByMoveOutDateAndLogin(String login, String moveOutDate) throws SQLException{
+        int roomNumber;
+        try (Connection connection = DriverManager.getConnection(DBConstants.URL, DBConstants.USER, DBConstants.PASSWORD)) {
+            PreparedStatement preparedStatement = connection.prepareStatement(" SELECT RoomNumber FROM Rooms AS r LEFT JOIN Journal AS j ON r.Id=j.RoomId\n" +
+                    " LEFT JOIN Users AS u ON (u.Id=j.UserId)\n" +
+                    " WHERE MoveOutDate LIKE ? AND Login LIKE ?");
+            preparedStatement.setString(1, moveOutDate);
+            preparedStatement.setString(2, login);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            roomNumber = resultSet.getInt("RoomNumber");
+        }
+        return roomNumber;
+        }
+
+    public Date getLastDateByLogin(String login, String dateField) throws SQLException{
+        try (Connection connection = DriverManager.getConnection(DBConstants.URL, DBConstants.USER, DBConstants.PASSWORD)) {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT "+dateField+" FROM Journal AS j JOIN Users AS u ON j.UserId=u.Id\n" +
+                    "WHERE Login LIKE \'"+login+"\' \n" +
+                    "ORDER BY "+dateField+" DESC\n" +
+                    "LIMIT 1");
+            resultSet.next();
+            Date lastDate = resultSet.getDate(dateField);
+            return lastDate;
+        }
+        }
+
+    public Date getDate(int jId, String field) throws SQLException {
         String query = "SELECT " + field + " FROM Journal AS j\n" +
                 "LEFT JOIN Rooms AS r ON (j.RoomId=r.Id) \n" +
-                "WHERE j.Id = ?"; /*"SELECT "+field+" FROM Journal AS j\n" +
-                "LEFT JOIN Rooms AS r ON (j.RoomId=r.Id) \n" +
-                "WHERE r.UId LIKE ?";*/
+                "WHERE j.Id = ?";
         Date date;
         try (Connection connection = DriverManager.getConnection(DBConstants.URL, DBConstants.USER, DBConstants.PASSWORD)) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -792,7 +804,7 @@ public class DBProxy {
         return date;
     }
 
-    public /*static*/ List<Room> getReservedByLogin(String login) throws SQLException {
+    public List<Room> getReservedByLogin(String login) throws SQLException {
         List<Room> rooms = new ArrayList<>();
         String query = "SELECT MoveInDate, MoveOutDate, RoomNumber, Login FROM Journal AS j\n" +
                 "LEFT JOIN Rooms AS r ON (j.RoomId=r.Id) LEFT JOIN Users AS u ON j.UserId=u.Id\n" +
@@ -805,11 +817,9 @@ public class DBProxy {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 int number = resultSet.getInt("RoomNumber");
-                rooms.add(Hotel.getInstance().getRoomByNumber(number)); // NULL?
+                rooms.add(Hotel.getInstance().getRoomByNumber(number));
             }
             return rooms;
         }
     }
-
-
 }

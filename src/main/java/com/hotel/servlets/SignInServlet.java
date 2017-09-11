@@ -24,20 +24,14 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class SignInServlet extends HttpServlet {
-    Logger logger = Logger.getLogger(SignInServlet.class);
+    private Logger logger = Logger.getLogger(SignInServlet.class);
     ErrorProcessor errorProcessor = new ErrorProcessor();
-
-    public void init() {
-        System.out.println(this + ".init()");
-    }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         FileXmlConfigPath xmlConfigPath = new FileXmlConfigPath();
 
-        System.out.println(this + ".doGet()");
-
         DOMConfigurator.configure(xmlConfigPath.getFileXmlConfigPath());
-        //logger.info("Log in");
+        logger.info("Log in");
         try {
             DBProxy.getInstance().initialize();
 
@@ -63,7 +57,6 @@ public class SignInServlet extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        System.out.println(this + "doPost()");
         String checkedLogin = request.getParameter(NamesOfElements.CHECKED_LOGIN);
 
         if (DBProxy.getInstance().findUser(checkedLogin)) {
@@ -89,12 +82,11 @@ public class SignInServlet extends HttpServlet {
 
                     User user = DBProxy.getInstance().getUserByLogin(checkedLogin);
                     Role role = user.getRole();
-                    //System.out.println("role = " + role);
                     if (role.getValue().equals("Admin")) {
                         session.setAttribute("token", token);
                         response.sendRedirect("admin");
                     } else {
-                        // logger.info("Login has been successful.");
+                         logger.info("Login has been successful.");
                         session.setAttribute("userToken", token);
                         response.sendRedirect("account");
                     }
@@ -104,14 +96,14 @@ public class SignInServlet extends HttpServlet {
                     return;
                 }
             } else {
-                //  logger.error("Wrong password in login");
+                  logger.error("Wrong password in login");
                 request.setAttribute("error", "Wrong password for login.");
 
                 doGet(request, response);
             }
         } else {
             request.setAttribute("error", "This login does not exist.");
-            //logger.error("Wrong login.");
+            logger.error("Wrong login.");
             doGet(request, response);
         }
     }

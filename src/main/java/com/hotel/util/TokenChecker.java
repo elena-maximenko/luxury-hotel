@@ -32,7 +32,7 @@ public class TokenChecker {
             session.setAttribute("login", login);
 
             switch(page){
-                case"RoomImagesPage.jsp":
+                case "RoomImagesPage.jsp":
                 {
                     int numberRoomToWatch = Integer.parseInt(request.getParameter(NamesOfElements.ROOM_NUMBER));
                     request.setAttribute("room", numberRoomToWatch);

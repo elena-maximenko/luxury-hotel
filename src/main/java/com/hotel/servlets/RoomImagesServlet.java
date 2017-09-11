@@ -11,9 +11,6 @@ import java.io.IOException;
 
 public class RoomImagesServlet extends HttpServlet {
     private ErrorProcessor errorProcessor = new ErrorProcessor();
-    public void init(){
-        System.out.println(this + ".init()");
-    }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
        try{

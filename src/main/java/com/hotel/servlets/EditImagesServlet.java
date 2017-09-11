@@ -19,13 +19,8 @@ import java.sql.SQLException;
 @MultipartConfig()
 public class EditImagesServlet extends HttpServlet {
     private ErrorProcessor errorProcessor = new ErrorProcessor();
-    public void init(){
-        System.out.println(this + ".init()");
-    }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
-        System.out.println(this + ".doGet()");
-
         try {
             TokenChecker.checkToken(request, response, "EditImagesPage.jsp");
         }
@@ -40,15 +35,12 @@ public class EditImagesServlet extends HttpServlet {
         String url;
         int number;
 
-        System.out.println(this + ".doPost()");
-
          url = request.getParameter(NamesOfElements.HIDDEN_IMAGE_URL);
          uId = request.getParameter(NamesOfElements.HIDDEN_IMAGE_UID);
          number = Integer.parseInt(request.getParameter(NamesOfElements.ROOM_NUMBER));
             try{
                 DBProxy.getInstance().delete(uId, DBProxy.getQueryDeleteImage());
                 File image  = new File(url);
-                //CHECK THIS Y "RESULT OF THIS METHOD IS IGNORED"?
                 image.delete();
             }
             catch (SQLException sqle){

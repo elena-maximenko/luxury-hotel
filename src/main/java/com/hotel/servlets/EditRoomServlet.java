@@ -35,13 +35,7 @@ import static com.hotel.servlets.AddRoomServlet.MEMORY_THRESHOLD;
 public class EditRoomServlet extends HttpServlet{
     private ErrorProcessor errorProcessor = new ErrorProcessor();
 
-    public void init(){
-        System.out.println(this + ".init()");
-    }
-
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
-        System.out.println(this + ".doGet()");
-
         try {
             TokenChecker.checkToken(request, response, "EditRoomPage.jsp");
         }
@@ -58,8 +52,6 @@ public class EditRoomServlet extends HttpServlet{
         String capacity = "";
         String category = "";
         String state = "";
-
-        System.out.println(this + ".doPost()");
 
         HttpSession session = request.getSession(false);
         Room room = (Room)session.getAttribute("room");
@@ -162,7 +154,6 @@ public class EditRoomServlet extends HttpServlet{
             error = error.concat("Check Your numbers, we've used absolute values.");
             httpSession.setAttribute("warning", error);
         }
-
             try{
                 Room scope = DBProxy.getInstance().getRoomByNumber(room.getNumber());
 

@@ -24,13 +24,7 @@ public class ResetPasswordServlet extends HttpServlet {
     private Validator validator = new Validator();
     private ErrorProcessor errorProcessor = new ErrorProcessor();
 
-    public void init() {
-        System.out.println(this + ".init()");
-    }
-
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println(this + ".doGet()");
-
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("ResetPasswordPage.jsp");
         requestDispatcher.forward(request, response);
     }
@@ -38,8 +32,6 @@ public class ResetPasswordServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String[] errors;
         String errorMessages = "";
-
-        System.out.println(this + ".doPost()");
 
         String resetPassword = request.getParameter(NamesOfElements.RESET_PASSWORD);
        // System.out.println("reset password = " + resetPassword);

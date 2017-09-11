@@ -24,15 +24,10 @@ public class CodeServlet extends HttpServlet {
     private boolean isSent;
     private ErrorProcessor errorProcessor = new ErrorProcessor();
 
-    Logger logger = Logger.getLogger(CodeServlet.class);
-
-    public void init() {
-        System.out.println(this + ".init()");
-    }
+    private Logger logger = Logger.getLogger(CodeServlet.class);
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         boolean isRegistration;
-        System.out.println(this + ".doGet()");
 
         HttpSession se = request.getSession(false);
         try {
@@ -53,7 +48,7 @@ public class CodeServlet extends HttpServlet {
                     mailSender.send(userLogin, isRegistration);
                     isSent = true;
                 }
-                //logger.info("Message has been sent.");
+                logger.info("Message has been sent.");
                 RequestDispatcher requestDispatcher = request.getRequestDispatcher("CodePage.jsp");
                 requestDispatcher.forward(request, response);
             } catch (EmailException | Base64DecodingException | SQLException e) {
@@ -67,15 +62,13 @@ public class CodeServlet extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        System.out.println(this + "doPost()");
-
         String code = request.getParameter(NamesOfElements.CODE);
 
         if (!code.equals(mailSender.getLastSentCode())) {
             request.setAttribute("error", "Code is not correct.");
             doGet(request, response);
         } else {
-            //logger.info("Registration has been successful");
+            logger.info("Registration has been successful");
 
             HttpSession session = request.getSession(false);
             try{
@@ -104,7 +97,7 @@ public class CodeServlet extends HttpServlet {
                             errorProcessor.appearError(request, response);
                             return;
                         }
-                        //logger.info("New user " + NamesOfElements.LOGIN + " has registered.");*/
+                        logger.info("New user " + NamesOfElements.LOGIN + " has registered.");
 
                         response.sendRedirect("account");
                     }

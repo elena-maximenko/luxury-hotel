@@ -12,16 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-//log4j.xml put in artifact directory (although is's been already there)
 public class AccountServlet extends HttpServlet {
-    //private ErrorProcessor errorProcessor = new ErrorProcessor();
     private int counter = 0;
-    public void init(){
-        System.out.println(this + "init()");
-    }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        System.out.println(this + "doGet()");
         //doesn't allow user get to account without registration or login
         try {
             TokenChecker.checkUserToken(request, response, "AccountPage.jsp");
@@ -34,8 +28,6 @@ public class AccountServlet extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
         String field;
-
-        System.out.println(this + ".doPost()");
 
         String order = (counter%2==0)?"DESC":"ASC";
         counter++;
@@ -57,8 +49,5 @@ public class AccountServlet extends HttpServlet {
         request.setAttribute("rooms", DBProxy.getInstance().getRooms(field, order, false));
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("AccountPage.jsp");
         requestDispatcher.forward(request, response);
-       /* counter = new RoomsServlet().sortRooms(request, counter);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("AccountPage.jsp");
-        requestDispatcher.forward(request, response);*/
     }
 }

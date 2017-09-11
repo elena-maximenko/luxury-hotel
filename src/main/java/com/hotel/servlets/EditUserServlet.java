@@ -18,13 +18,7 @@ public class EditUserServlet extends HttpServlet
 {
     private ErrorProcessor errorProcessor = new ErrorProcessor();
 
-    public void init(){
-        System.out.println(this+".init()");
-    }
-
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        System.out.println(this + ".doGet()");
-
         try{
             TokenChecker.checkToken(request, response, "EditUserPage.jsp");
         }
@@ -34,8 +28,6 @@ public class EditUserServlet extends HttpServlet
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
-        System.out.println(this + ".doPost()");
-
         String login = request.getParameter(NamesOfElements.EDITED_LOGIN);
 
         User user = DBProxy.getInstance().getUserByLogin(login);
@@ -55,6 +47,5 @@ public class EditUserServlet extends HttpServlet
             e.fillInStackTrace();
             errorProcessor.appearError(request, response);
         }
-
     }
 }

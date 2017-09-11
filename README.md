@@ -10,6 +10,7 @@ About this site
   
 Installation
 ------------  
+  Install and deploy myApp.war and run the application.
   Please while working with this web application don't forget to turn off your antivirus software. It may be obstacle for sending letters on your email from current web application.
   You should allow receiving letters from insecure applications in setting of your email account.
   
@@ -22,7 +23,8 @@ Installation
 Libraries and modules
 ---------------------
     
-    There is only one module in this application. It is named SummaryTask4. In current application Tomcat, MySQL, Maven, commons-email, commons-fileupload, commons-io are used.
+    There is only one module in this application. It is named SummaryTask4. In current application Tomcat, MySQL, Maven, log4j, commons-email, commons-fileupload, commons-io are used.
+    Tomcat version is 7+.
     For storing application data MySQL open-source relational database management system is chosen.
     
     

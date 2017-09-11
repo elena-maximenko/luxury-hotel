@@ -24,12 +24,7 @@ import java.util.Date;
 public class ReservationServlet extends HttpServlet {
     private ErrorProcessor errorProcessor = new ErrorProcessor();
 
-    public void init() {
-        System.out.println(this + ".init()");
-    }
-
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        System.out.println(this + ".doGet()");
         try {
             TokenChecker.checkUserToken(request, response, "ReservationPage.jsp");
         } catch (NullPointerException e) {
@@ -39,45 +34,50 @@ public class ReservationServlet extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        System.out.println(this + "doPost()");
-
-        //HttpSession session = request.getSession(false);
         int room = Integer.parseInt(request.getParameter(NamesOfElements.ROOM_NUMBER));
 
         String endDate = request.getParameter(NamesOfElements.END_DATE);
         String beginDate = request.getParameter(NamesOfElements.BEGIN_DATE);
 
+        String login = (String) request.getSession(false).getAttribute("login");
+
         HttpSession session = request.getSession(true);
         session.setAttribute("begin", beginDate);
         session.setAttribute("end", endDate);
-        if (endDate.equals(beginDate)) {
-            session.setAttribute("error", "Reservation is possible for at least 1 day.");
-            response.sendRedirect("reserve?room=" + room);
-            return;
+
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date lastMoveOutDate = DBProxy.getInstance().getLastDateByLogin(login, "MoveOutDate");
+            Date lastMoveInDate = DBProxy.getInstance().getLastDateByLogin(login, "MoveInDate");
+
+            if (endDate.equals(beginDate)) {
+                request.setAttribute("error", "Reservation is possible for at least 1 day.");
+                response.sendRedirect("reserve?room=" + room);
+                return;
+            } else if (!dateFormat.parse(endDate).after(lastMoveOutDate) ||
+                    !dateFormat.parse(beginDate).after(lastMoveInDate) ||
+                    !dateFormat.parse(beginDate).after(lastMoveOutDate)) {
+                session.setAttribute("error", "At this time You've reserved room # " + DBProxy.getInstance().getRoomNumberByMoveOutDateAndLogin(login, lastMoveOutDate.toString()));
+                response.sendRedirect("reserve?room=" + room);
+                return;
+            }
+
+            Date dateBegin = dateFormat.parse(beginDate);
+            Date dateEnd = dateFormat.parse(endDate);
+
+            if (dateEnd.before(dateBegin)) {
+                session.setAttribute("error", "Wrong dates.");
+            } else {
+                session.setAttribute("message", "Reservation's been succeed.");
+
+                DBProxy.getInstance().insertInJournal(login, room, new java.sql.Date(dateBegin.getTime()), new java.sql.Date(dateEnd.getTime()));
+                Room reservedRoom = DBProxy.getInstance().changeState("Reserved", room);
+                Hotel.getInstance().setRoom(room, reservedRoom);
+            }
+        } catch (ParseException | SQLException e) {
+            e.printStackTrace();
+            errorProcessor.appearError(request, response);
         }
-
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");//"MM-dd-yyyy");
-       try{
-           Date dateBegin = dateFormat.parse(beginDate);
-           Date dateEnd = dateFormat.parse(endDate);
-
-           if(dateEnd.before(dateBegin)){
-               session.setAttribute("error", "Wrong dates.");
-           }
-            else{
-               session.setAttribute("message", "Reservation's been succeed.");
-               new AddImagesServlet().removeAttributes(session, Arrays.asList("error", "message"), "message");
-
-               String login = (String)request.getSession(true).getAttribute("login");
-               DBProxy.getInstance().insertInJournal(login, room, new java.sql.Date(dateBegin.getTime()), new java.sql.Date(dateEnd.getTime()));
-               Room reservedRoom = DBProxy.getInstance().changeState("Reserved", room);
-               Hotel.getInstance().setRoom(room, reservedRoom);
-           }
-       }
-       catch (ParseException | SQLException e){
-           e.printStackTrace();
-           errorProcessor.appearError(request, response);
-       }
 
         response.sendRedirect("reserve?room=" + room);
         return;

@@ -24,12 +24,7 @@ public class SignUpServlet extends HttpServlet {
     private ErrorProcessor errorProcessor = new ErrorProcessor();
     private Validator validator = new Validator();
 
-    //put jars for log4j in CATALINA_HOME\lib!
-    public static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(SignUpServlet.class);
-
-    public void init(){
-        System.out.println(this + ".init()");
-    }
+    private static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(SignUpServlet.class);
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         FileXmlConfigPath xmlConfigPath = new FileXmlConfigPath();
@@ -37,7 +32,7 @@ public class SignUpServlet extends HttpServlet {
 
         DOMConfigurator.configure(xmlConfigPath.getFileXmlConfigPath());
 
-        //logger.info("Registration");
+        logger.info("Registration");
         try {
             DBProxy.getInstance().initialize();
 
@@ -104,7 +99,6 @@ public class SignUpServlet extends HttpServlet {
                 //System.out.println(entry.getKey() + "/" + value);
 
                 String parameter = request.getParameter(entry.getKey());
-              //  System.out.println("parameter = " + parameter);
 
                 if(!validator.isCorrectParameter(parameter, value, (entry.getKey().equals(NamesOfElements.PASSWORD))?true:false)){
 
@@ -146,12 +140,10 @@ public class SignUpServlet extends HttpServlet {
                 }
             }
         }
-        // System.out.println("errorMessages = " + errorMessages);
         request.setAttribute("errorMessages", errorMessages);
 
         if(!errorMessages.equals("")){
             request.setAttribute("message", errorMessages);
-           // logger.error(logError);*/
             doGet(request, response);
         }
         else {

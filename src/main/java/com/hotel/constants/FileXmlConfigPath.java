@@ -8,12 +8,8 @@ public class FileXmlConfigPath {
     private String fileXmlConfigPath;
 
     public String getFileXmlConfigPath() {
-        try {
-            fileXmlConfigPath = Paths.get(
-                    getClass().getProtectionDomain().getCodeSource().getLocation().toURI()) + File.separator + "log4j.xml";
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        };
+        fileXmlConfigPath = new com.hotel.servlets.AddRoomServlet().getImagesDir();
+        fileXmlConfigPath = fileXmlConfigPath.substring(0, fileXmlConfigPath.lastIndexOf("\\Images")).concat("\\log4j.xml");;
         return fileXmlConfigPath;
     }
 }

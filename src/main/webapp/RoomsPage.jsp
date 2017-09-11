@@ -58,7 +58,7 @@
             </form>
 
             <p>
-                <select id="select-sort" class="select-role" style="position:fixed; left: 50px; top: 170px; display:none; width: 120px">
+                <select id="selectSort" class="select-role" style="position:fixed; left: 50px; top: 170px; display:none; width: 120px">
                     <option disabled selected>Sort by </option>
                     <option value="RoomNumber">Number</option>
                     <option value="Price">Price</option>

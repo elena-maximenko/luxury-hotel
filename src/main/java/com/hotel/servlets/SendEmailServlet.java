@@ -12,18 +12,12 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class SendEmailServlet extends HttpServlet{
-    public void init(){
-        System.out.println(this + ".init()");
-    }
-
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
-        System.out.println(this + ".doGet()");
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("SendEmailPage.jsp");
         requestDispatcher.forward(request, response);
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
-        System.out.println(this + ".doPost()");
         String email = request.getParameter(NamesOfElements.EMAIL);
 
         if(DBProxy.getInstance().findUser(email)){

@@ -1,3 +1,4 @@
+<%@ page import="java.util.Arrays" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -33,16 +34,16 @@
             <%if(requestSession.getAttribute("message")!=null){ %>
             document.getElementById('errorBlock').style.color = "aliceblue";
             document.getElementById('errorBlock').innerHTML = "<%=requestSession.getAttribute("message")%>";
-        <%}%>
+        <% }%>
         }
     </script>
 </head>
 <body onload="updateClock(); setInterval('updateClock()', 1000 );setDefaultDate(); setInput(); getMessage()">
 <%
-    HttpSession ses = request.getSession(false);
-    String token = (String)ses.getAttribute("userToken");
-    int room = (int)ses.getAttribute("room");
-    ses.setAttribute("room", room);
+   // HttpSession ses = request.getSession(false);
+    String token = (String)requestSession.getAttribute("userToken");
+    int room = (int)requestSession.getAttribute("room");
+    requestSession.setAttribute("room", room);
 
     HttpSession httpSession = request.getSession(true);
     httpSession.setAttribute("userToken", token);%>
@@ -60,13 +61,17 @@
         <input type="hidden" value="<%=room%>" name="room">
         <input type="submit" value="Reserve" style="width:230px; left:550px;position: fixed; top: 140px">
     </form>
-    <div id="errorBlock" style="height: 100px;font-size:16px; top:400px"><%=(httpSession.getAttribute("error")==null)?"":(String)httpSession.getAttribute("error")%></div>
+    <div id="errorBlock" style="height: 100px;font-size:16px; top:400px"><%=(session.getAttribute("error")==null)?"":(String)httpSession.getAttribute("error")%></div>
     <form style="top: 450px; position: fixed; right: 75px; width: 250px" method="get" action="account?">
         <button class="button-submit-with-icon" style="cursor: hand; width: 300px; height: 30px" type="submit">
             <span style="font: bolder 20px Constantia, serif; color: white; text-decoration: underline">Back to the account</span>
         </button>
     </form>
 </div>
+<%
+    requestSession.removeAttribute("message");
+    requestSession.removeAttribute("error");
+%>
 <div id="dateBlock"> <span id="clock">&nbsp;</span>
     <script src="../Scripts.js">
     </script>

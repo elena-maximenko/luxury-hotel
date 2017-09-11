@@ -28,7 +28,6 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 @MultipartConfig()
 public class AddRoomServlet extends HttpServlet {
-    private Hotel hotel;
     public static final int MEMORY_THRESHOLD = 1024 * 1024 * 3;  // 3MB
     public static final int MAX_FILE_SIZE = 1024 * 1024 * 40; // 40MB
     public static final int MAX_REQUEST_SIZE = 1024 * 1024 * 50; // 50MB
@@ -48,12 +47,7 @@ public class AddRoomServlet extends HttpServlet {
         return imagesDir;
     }
 
-    public void init() {
-        System.out.println(this + ".init()");
-    }
-
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        System.out.println(this + ".doGet()");
         try{
             TokenChecker.checkToken(request, response, "AddRoomPage.jsp");
         }
@@ -63,7 +57,6 @@ public class AddRoomServlet extends HttpServlet {
         }
     }
 
-    //put apache-commons io jar in CATALINA_HOME\lib!
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         int roomNumber = 0;
         double price = 0.0;
@@ -72,9 +65,6 @@ public class AddRoomServlet extends HttpServlet {
         String capacity = "";
         String error = "";
         List<String> images = new ArrayList<>();
-        hotel = Hotel.getInstance();
-
-        System.out.println(this + ".doPost()");
 
         // configures upload settings
         DiskFileItemFactory factory = new DiskFileItemFactory();

@@ -30,12 +30,8 @@ import static com.hotel.servlets.AddRoomServlet.MEMORY_THRESHOLD;
 @MultipartConfig
 public class AddImagesServlet extends HttpServlet {
     private ErrorProcessor errorProcessor = new ErrorProcessor();
-    public void init(){
-        System.out.println(this + ".init()");
-    }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response){
-        System.out.println(this + ".doGet()");
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
@@ -44,8 +40,6 @@ public class AddImagesServlet extends HttpServlet {
         String error = "";
         List<String> attributes = Arrays.asList("selectedFiles", "error", "message");
         List<String> images = new ArrayList<>();
-
-        System.out.println(this + ".doPost()");
 
         DiskFileItemFactory factory = new DiskFileItemFactory();
         // sets memory threshold - beyond which files are stored in disk
